@@ -1,105 +1,98 @@
-<template id="cate">
-  <div class="cate">
-    <!-- this data for table display -->
-    <v-data-table
-      :headers="headers"
-      :items="Categories"
-      disable-pagination = false
-      sort-by="calories"
-      class="elevation-1"
-    >
-      <template v-slot:top>
-        <v-toolbar flat>
-          <v-toolbar-title>
-            <span class="text-h5">{{ TableTitle }}</span>
-          </v-toolbar-title>
-          <v-divider class="mx-4" inset vertical></v-divider>
-          <v-spacer></v-spacer>
-          <v-dialog v-model="dialog" max-width="500px">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn color="light" dark class="mb-2" v-bind="attrs" v-on="on">
-                AddItem
-              </v-btn>
-            </template>
+<template>
+  <!-- this data for table display -->
+  <v-data-table
+    :headers="headers"
+    :items="Categories"
+    disable-pagination="false"
+    class="elevation-1"
+  >
+    <template v-slot:top>
+      <v-toolbar flat>
+        <v-toolbar-title> All Categories </v-toolbar-title>
+        <v-divider class="mx-4" inset vertical></v-divider>
+        <v-spacer></v-spacer>
+        <v-dialog v-model="dialog" max-width="500px">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn color="light" dark class="mb-2" v-bind="attrs" v-on="on">
+              <router-link to="/adddata" class="btn_design"> AddItem </router-link>
+            </v-btn>
+          </template>
 
-            <v-card>
-              <v-card-title>
-                <span class="text-h5">{{ formTitle }}</span>
-              </v-card-title>
-              <!-- display table data name id status etc....  -->
-              <v-card-text>
-                <!-- form.....  -->
-                <v-container>
-                  <v-row>
-                    <v-col cols="12" sm="6" md="4">
-                      id
-                      <v-text-field v-model="editedItem.id" label="id"></v-text-field>
-                    </v-col>
+          <v-card>
+            <v-card-title>
+              <span class="text-h5">{{ formTitle }}</span>
+            </v-card-title>
+            <!-- display table data name id status etc....  -->
+            <v-card-text>
+              <!-- form.....  -->
+              <v-container>
+                <v-row>
+                  <v-col cols="12" sm="6" md="4">
+                    id
+                    <v-text-field v-model="editedItem.id" label="id"></v-text-field>
+                  </v-col>
 
-                    <v-col cols="12" sm="6" md="4">
-                      name
-                      <v-text-field v-model="editedItem.Name" label="Name"></v-text-field>
-                    </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    name
+                    <v-text-field v-model="editedItem.Name" label="Name"></v-text-field>
+                  </v-col>
 
-                    <v-col cols="12" sm="6" md="4">
-                      <v-textarea
-                        solo
-                        v-model="editedItem.Description"
-                        name="Description"
-                        :rules="DescriptionRules"
-                        :counter="100"
-                        label="Description"
-                      ></v-textarea>
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-switch v-model="editedItem.status">
-                        {{ editedItem.status | changevalue }}</v-switch
-                      >
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-card-text>
-              <!-- edit form save aur cancle button for edit data  -->
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="close"> Cancel </v-btn>
-                <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-textarea
+                      solo
+                      v-model="editedItem.Description"
+                      name="Description"
+                      :rules="DescriptionRules"
+                      :counter="100"
+                      label="Description"
+                    ></v-textarea>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-switch v-model="editedItem.status"> </v-switch>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
+            <!-- edit form save aur cancle button for edit data  -->
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="close"> Cancel </v-btn>
+              <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
 
-          <!--card for the delete message sure value popups -->
-          <v-dialog v-model="dialogDelete" max-width="500px">
-            <v-card>
-              <v-card-title class="text-h5"
-                >Are you sure you want to delete this item?</v-card-title
-              >
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-                <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
-                <v-spacer></v-spacer>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
+        <!--card for the delete message sure value popups -->
+        <v-dialog v-model="dialogDelete" max-width="500px">
+          <v-card>
+            <v-card-title class="text-h5"
+              >Are you sure you want to delete this item?</v-card-title
+            >
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
+              <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+              <v-spacer></v-spacer>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
 
-          <!--  -->
-        </v-toolbar>
-      </template>
-      <!--action button code -->
-      <template v-slot:item.actions="{ item }">
-        <!-- edit button -->
-        <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
-        <!-- delete button -->
-        <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
-      </template>
-      <template v-slot:no-data>
-        <v-btn color="primary" @click="initialize"> Reset </v-btn>
-      </template>
-    </v-data-table>
-  </div>
+        <!--  -->
+      </v-toolbar>
+    </template>
+    <!--action button code -->
+    <template v-slot:item.actions="{ item }">
+      <!-- edit button -->
+      <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
+      <!-- delete button -->
+      <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+    </template>
+    <template v-slot:no-data>
+      <v-btn color="primary" @click="initialize"> Reset </v-btn>
+    </template>
+  </v-data-table>
 </template>
 
 <script>
@@ -108,14 +101,6 @@ export default {
   data: () => ({
     dialog: false,
     dialogDelete: false,
-    // headers: [
-    //   { text: "id", value: "id" },
-    //   { text: "Name", value: "Name" },
-    //   { text: "Description", value: "Description" },
-    //   { text: "status", value: "status" },
-    //   { text: "Actions", value: "actions", sortable: false },
-    // ],
-
     editedIndex: -1,
     Table: -1,
 
@@ -141,9 +126,6 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
     },
-    TableTitle() {
-      return this.Table === -1 ? "All Categories" : "Items";
-    },
   },
 
   watch: {
@@ -163,12 +145,18 @@ export default {
   //   },
   // },
 
+  mounted() {
+    const CateValue = localStorage.getItem("CategorieData");
+    console.log(CateValue);
+  },
   methods: {
     // this for open edit form
     editItem(item) {
       this.editedIndex = this.Categories.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
+      const EditValue = localStorage.getItem("EditData");
+      console.log(EditValue);
     },
     //for delete item sure popup message display and ic ok them cancle value
     deleteItem(item) {
@@ -203,7 +191,8 @@ export default {
     save() {
       if (this.editedIndex > -1) {
         Object.assign(this.Categories[this.editedIndex], this.editedItem);
-        // localStorage.setItem("EditData", JSON.stringify(this.editedItem));
+
+        localStorage.setItem("EditData", JSON.stringify(this.editedItem));
       } else {
         this.Categories.push(this.editedItem);
       }
@@ -213,7 +202,14 @@ export default {
 };
 </script>
 <style scoped>
-#cate {
-  padding: 0 0 0 0;
+.v-data-footer {
+  display: none !important;
 }
+.btn_design {
+  text-decoration: none;
+  color: #ffffff;
+}
+/* .v-main {
+  padding: 61px 17px 0 148px !important ;
+} */
 </style>

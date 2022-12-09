@@ -1,8 +1,11 @@
 <template>
   <v-app id="inspire">
     <v-main class="table_main">
-      <categories :Categories="Categories" :headers="headers"></categories>
-    
+      <categories
+        :Categories="Categories"
+        :headers="headers"
+        :itemlist="itemlist"
+      ></categories>
     </v-main>
   </v-app>
 </template>
@@ -11,10 +14,9 @@
 import Categories from "../components/Categories.vue";
 
 export default {
-  props: ["headers", "Categories" ,"items"],
+  props: ["headers", "Categories", "itemlist"],
   components: {
-    'categories': Categories,
-  
+    categories: Categories,
   },
 
   data: () => ({ drawer: null }),

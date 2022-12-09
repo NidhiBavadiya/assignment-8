@@ -1,18 +1,16 @@
 <template>
   <div>
-    <addform :Categories="Categories" :headers="headers"></addform>
-
+    <addform :Categories="Categories" :headers="headers" :items="items"></addform>
   </div>
 </template>
 
 <script>
 import AddForm from "../components/AddForm.vue";
 
-
 export default {
-  props: ["Categories", "headers" ,"items"],
+  props: ["Categories", "headers", "items"],
   components: {
-    'addform': AddForm,
+    addform: AddForm,
   },
 };
 </script>

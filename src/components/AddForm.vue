@@ -3,6 +3,8 @@
     <v-container>
       <div class="form">
         <h2>Add new Categories</h2>
+
+        <!-- id -->
         <v-row class="form_row">
           <v-col cols="12" md="4" sm="4" class="form_col">
             <v-text-field
@@ -14,6 +16,8 @@
             ></v-text-field>
           </v-col>
         </v-row>
+
+        <!-- name -->
         <v-row class="form_row">
           <v-col cols="12" md="4" sm="4" class="form_col">
             <v-text-field
@@ -24,6 +28,8 @@
             ></v-text-field>
           </v-col>
         </v-row>
+
+        <!-- discription -->
         <v-row class="form_row">
           <v-col cols="12" md="4" sm="4" class="form_col">
             <v-textarea
@@ -36,9 +42,11 @@
             ></v-textarea>
           </v-col>
         </v-row>
+        <!-- status -->
         <v-row class="form_row">
           <v-switch v-model="status"></v-switch>
         </v-row>
+        <!-- add button -->
         <v-row class="form_row">
           <v-btn
             color="primary"
@@ -63,8 +71,9 @@ export default {
     valid: true,
     ID: "",
     idRules: [
-      (v) => !!v || "Name is required",
-      (v) => v.length <= 3 || "Name must be less than 10 characters",
+      (v) => !!v || "id is required",
+      (v) => Number.isInteger(v) || 'The value must be an integer number',
+      (v) => v.length <= 3 || "id must be less than 10 characters",
     ],
     Name: "",
     Description: "",
@@ -75,8 +84,11 @@ export default {
     status: false,
   }),
   mounted() {
+    const CateValue = localStorage.getItem("CategorieData");
+    console.log(CateValue);
     console.log(this.Categories);
   },
+  // method for new value add
   methods: {
     AddItems: function () {
       const newvalue = {
@@ -88,10 +100,7 @@ export default {
       console.log(newvalue);
       this.Categories.push(newvalue);
       console.log(this.Categories);
-      localStorage.setItem("AddData", JSON.stringify(this.Categories));
-      // localStorage.removeItem("AddData");
-      var AddCategories = localStorage.getItem("AddData");
-      console.log(AddCategories)
+      localStorage.setItem("CategorieData", JSON.stringify(this.Categories));
       this.$router.push("/");
     },
   },

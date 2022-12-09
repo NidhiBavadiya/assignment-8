@@ -9,9 +9,15 @@
             <v-btn color="light" v-bind="attrs" v-on="on" block> Item Category</v-btn>
           </template>
           <v-list>
-            <v-list-item><router-link to="/" class="item_list">All Categories</router-link></v-list-item>
             <v-list-item
-              ><router-link to="/adddata"  class="item_list">Add New Categories </router-link></v-list-item
+              ><router-link to="/" class="item_list"
+                >All Categories</router-link
+              ></v-list-item
+            >
+            <v-list-item
+              ><router-link to="/adddata" class="item_list"
+                >Add New Categories
+              </router-link></v-list-item
             >
           </v-list>
         </v-menu>
@@ -23,8 +29,16 @@
             <v-btn color="light" v-bind="attrs" v-on="on" block>Items </v-btn>
           </template>
           <v-list>
-            <v-list-item><router-link to="/itemlist"  class="item_list"> All Items</router-link></v-list-item>
-            <v-list-item><router-link to="/itemadd"  class="item_list">Add New Item</router-link></v-list-item>
+            <v-list-item
+              ><router-link to="/itemlist" class="item_list">
+                All Items</router-link
+              ></v-list-item
+            >
+            <v-list-item
+              ><router-link to="/itemadd" class="item_list"
+                >Add New Item</router-link
+              ></v-list-item
+            >
           </v-list>
         </v-menu>
       </div>
@@ -38,12 +52,19 @@
       <v-toolbar-title>inventory system</v-toolbar-title>
     </v-app-bar>
     <v-main class="mainpage">
-      <router-view :Categories="Categories" :headers="headers" :items="items" ></router-view>
+      <router-view
+        :Categories="Categories"
+        :headers="headers"
+        :itemlist="itemlist"
+        :Itemheaders="Itemheaders"
+      ></router-view>
+    
     </v-main>
   </v-app>
 </template>
 
 <script>
+
 export default {
   data: () => ({
     drawer: null,
@@ -66,14 +87,23 @@ export default {
         },
       ],
 
-      items : [
+      itemlist : [
         {
           id: 1,
           name: "Timex watch",
           category: "watch",
-          description:
+          Description:
             "A watch is a portable timepiece intended to be carried or worn by a person....",
           price: 4000,
+          status: "active",
+        },
+         {
+          id: 2,
+          name: "sandle",
+          category: "footware",
+          Description:
+            " to be carried or worn by a person....",
+          price: 500,
           status: "active",
         },
       ],
@@ -89,17 +119,22 @@ export default {
       { text: "status", value: "status" },
       { text: "Actions", value: "actions", sortable: false },
     ],
-  }),
-  methods: {
-    
-    // Categories(){
-    //   this.Categories.push(this.Categories)
-    //      localStorage.setItem("All_Categories", JSON.stringify(this.Categories));
-    // },
-    // Items(){
 
-    // },
-  },
+     Itemheaders: [
+      { text: "id", value: "id" },
+      { text: "name", value: "name" },
+      { text: "category", value: "category" },
+      { text: "Description", value: "Description" },
+      { text: "price", value: "price" },
+      { text: "status", value: "status" },
+      { text: "Actions", value: "actions", sortable: false },
+    ],
+  }),
+    mounted() {
+      localStorage.setItem("CategorieData", JSON.stringify(this.Categories));
+
+      localStorage.setItem("Items", JSON.stringify(this.itemlist));
+    },
 };
 </script>
 
@@ -107,12 +142,11 @@ export default {
 .mainpage {
   padding: 0;
 }
-a{
-  text-decoration:none;
-    color: #000000;
+a {
+  text-decoration: none;
+  color: #000000;
 }
-.item_list{
-    color: #000000;
+.item_list {
+  color: #000000;
 }
-
 </style>

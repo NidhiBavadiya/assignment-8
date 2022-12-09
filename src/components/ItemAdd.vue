@@ -2,7 +2,8 @@
   <v-form v-model="valid">
     <v-container>
       <div class="form">
-      <h2>Add new Item</h2>
+        <h2>Add new Item</h2>
+
         <!-- id -->
         <v-row class="form_row">
           <v-col cols="12" md="4" sm="4" class="form_col">
@@ -15,6 +16,7 @@
             ></v-text-field>
           </v-col>
         </v-row>
+
         <!-- name -->
         <v-row class="form_row">
           <v-col cols="12" md="4" sm="4" class="form_col">
@@ -26,12 +28,14 @@
             ></v-text-field>
           </v-col>
         </v-row>
+
         <!-- categories -->
         <v-row class="form_row">
           <v-col cols="12" md="4" sm="4" class="form_col">
             <v-select :items="items" label="Category "></v-select>
           </v-col>
         </v-row>
+
         <!-- description -->
         <v-row class="form_row">
           <v-col cols="12" md="4" sm="4" class="form_col">
@@ -45,19 +49,19 @@
             ></v-textarea>
           </v-col>
         </v-row>
+
         <!-- price -->
         <v-row class="form_row">
           <v-col cols="12" md="4" sm="4">
-            <v-text-field
-              prefix="$"
-              label="price"
-            ></v-text-field>
+            <v-text-field v-model="Price" prefix="$" :rules="PriceRules" label="Price"></v-text-field>
           </v-col>
         </v-row>
+
         <!-- status -->
         <v-row class="form_row">
           <v-switch v-model="status"></v-switch>
         </v-row>
+
         <!-- button -->
         <v-row class="form_row">
           <v-btn
@@ -66,8 +70,7 @@
             class="mb-2"
             v-bind="attrs"
             v-on="on"
-            v-on:click="AddItems()"
-          >
+            v-on:click="AddItems()">
             AddItem
           </v-btn>
         </v-row>
@@ -78,46 +81,54 @@
 
 <script>
 export default {
-  props: ["Categories", "headers","items"],
+  props: ["Categories", "headers", "itemlist"],
   data: () => ({
     valid: true,
     ID: "",
     idRules: [
-      (v) => !!v || "Name is required",
-      (v) => v.length <= 3 || "Name must be less than 10 characters",
+      (v) => !!v || "Id is required",
+      (v) => Number.isInteger(v) || 'The value must be an integer number',
+      (v) => v.length <= 3 || "ID must be less than 10 characters",
     ],
     Name: "",
-    Category:'',
+    Category: "",
     Description: "",
     DescriptionRules: [
       (v) => !!v || "Description is required",
       (v) => v.length <= 100 || "Description must be less than 100 characters",
     ],
-    price:'',
+    Price: "",
+    PriceRules:[
+    (v) => !!v || "price is required",
+     (v) => Number.isInteger(v) || 'The value must be an integer number',   
+    ],
     status: false,
   }),
   mounted() {
     console.log(this.items);
+    const CateValue = localStorage.getItem("Items");
+    console.log(CateValue);
   },
+
   methods: {
+    //   method for new value push in array
     AddItems: function () {
       const newitem = {
         id: this.ID,
         Name: this.Name,
-        Category:this.Category,
+        Category: this.Category,
         Description: this.Description,
-        price:this.price,
+        Price: this.Price,
         status: this.status,
       };
       console.log(newitem);
-      this.items.push(newitem);
-      console.log(this.Categories);
-      localStorage.setItem("AddItem", JSON.stringify(this.items));
-      // localStorage.removeItem("AddData");
-      var AddCategories = localStorage.getItem("AddData");
-      console.log(AddCategories);
-      this.$router.push("/");
+      this.itemlist.push(newitem);
+      console.log(this.itemlist);
+      localStorage.setItem("Items", JSON.stringify(this.itemlist));
+      this.$router.push("/itemlist");
     },
+    //get catagory from localstorage...
+
   },
 };
 </script>

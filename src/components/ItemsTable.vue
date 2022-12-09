@@ -1,8 +1,8 @@
 <template>
+<!-- display table for items -->
   <v-data-table
-    :headers="headers"
-    :items="items"
-    sort-by="calories"
+    :headers="Itemheaders"
+    :items="itemlist"
     class="elevation-1"
   >
     <template v-slot:top>
@@ -11,9 +11,10 @@
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
+        <!-- add item button -->
           <template v-slot:activator="{ on, attrs }">
-            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-              New Item
+            <v-btn color="light" dark class="mb-2" v-bind="attrs" v-on="on">
+             <router-link to = "/itemadd" class="btn_design"> New Item</router-link>
             </v-btn>
           </template>
           <!-- form for add and edit data... -->
@@ -25,28 +26,18 @@
             <v-card-text>
               <v-container>
                 <v-row>
-<!-- id -->
+                  <!-- id -->
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field v-model="editedItem.id" label="id"></v-text-field>
                   </v-col>
- <!-- name -->
+                  <!-- name -->
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
                       v-model="editedItem.name"
                       label="item name"
                     ></v-text-field>
                   </v-col>
-  <!-- category -->
-                  <!-- <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.category"
-                      label="category"
-                    ></v-text-field>
-                  </v-col> -->
+                  <!-- category -->
                   <v-col class="d-flex" cols="12" sm="6">
                     <v-select
                       :Categories="Categories"
@@ -55,7 +46,7 @@
                       Standard
                     ></v-select>
                   </v-col>
-<!-- description -->
+                  <!-- description -->
                   <v-col cols="12" sm="6" md="4">
                     <v-textarea
                       solo
@@ -68,13 +59,18 @@
                   ></v-col>
 
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.price" prefix="$" label="price"></v-text-field>
+                    <v-text-field
+                      v-model="editedItem.price"
+                      prefix="$"
+                      label="price"
+                    ></v-text-field>
                   </v-col>
 
                   <v-col cols="12" sm="6" md="4">
                     <v-switch v-model="editedItem.status">
-                        {{ editedItem.status | changevalue }}</v-switch
-                      >
+                     <span>{{ value }}</span>
+                      </v-switch
+                    >
                   </v-col>
                 </v-row>
               </v-container>
@@ -89,8 +85,8 @@
         </v-dialog>
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
-            <v-card-title class="text-h5"
-              >Are you sure you want to delete this item?</v-card-title
+            <v-card-title class="text-h5">
+              Are you sure you want to delete this item?</v-card-title
             >
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -114,42 +110,38 @@
 
 <script>
 export default {
-  props: ["Categories",'items'],
+  props: ["Categories", "itemlist", "Itemheaders"],
   data: () => ({
     dialog: false,
     dialogDelete: false,
-    headers: [
-      { text: "id", value: "id" },
-      { text: "name", value: "name" },
-      { text: "category", value: "category" },
-      { textarea: "description", value: "description" },
-      { text: "price", value: "price" },
-      { text: "status", value: "status" },
-      { text: "Actions", value: "actions", sortable: false },
-    ],
-    items: [],
+
     editedIndex: -1,
     editedItem: {
       id: "",
       name: "",
       category: "",
-      description: 0,
-      price: 0,
+      description: "",
+      price: "",
       status: "",
       Actions: "",
     },
     defaultItem: {
+      id: "",
       name: "",
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
+      category: "",
+      description: "",
+      price: "",
+      status: "",
+      Actions: "",
     },
   }),
 
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
+    },
+    value() {
+      return this.status === true ? "Active" : "deactive";
     },
   },
 
@@ -161,40 +153,37 @@ export default {
       val || this.closeDelete();
     },
   },
-
-//   created() {
-//     this.initialize();
-//   },
-
+  // this for swich data value change
+  //   filters: {
+  //     changevalue: function (value) {
+  //       console.log(value);
+  //       return value == true ? "Active" : "Deactive";
+  //     },
+  //   },
+  mounted() {
+    const ItemValue = localStorage.getItem("Items");
+    console.log(ItemValue);
+  },
   methods: {
-    // initialize() {
-    //   this.items = [
-    //     {
-    //       id: 1,
-    //       name: "Timex watch",
-    //       category: "watch",
-    //       description:
-    //         "A watch is a portable timepiece intended to be carried or worn by a person....",
-    //       price: 4000,
-    //       status: "active",
-    //     },
-    //   ];
-    // },
-
     editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
+      this.editedIndex = this.itemlist.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
+      const EditValue = localStorage.getItem("EditData");
+      console.log(EditValue);
+    },
+    toggle(){
+        
     },
 
     deleteItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
+      this.editedIndex = this.itemlist.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialogDelete = true;
     },
 
     deleteItemConfirm() {
-      this.desserts.splice(this.editedIndex, 1);
+      this.itemlist.splice(this.editedIndex, 1);
       this.closeDelete();
     },
 
@@ -216,12 +205,22 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
+        Object.assign(this.itemlist[this.editedIndex], this.editedItem);
+        localStorage.setItem("EditData", JSON.stringify(this.editedItem));
       } else {
-        this.desserts.push(this.editedItem);
+        this.itemlist.push(this.editedItem);
       }
       this.close();
     },
   },
 };
 </script>
+<style>
+.v-data-footer {
+  display: none !important;
+}
+.btn_design{
+    text-decoration:none;
+    color:#ffffff;
+}
+</style>
