@@ -3,7 +3,8 @@
     <!-- this data for table display -->
     <v-data-table
       :headers="headers"
-      :items="desserts"
+      :items="Categories"
+      disable-pagination = false
       sort-by="calories"
       class="elevation-1"
     >
@@ -103,17 +104,17 @@
 
 <script>
 export default {
-  props: ["desserts", "headers"],
+  props: ["Categories", "headers"],
   data: () => ({
     dialog: false,
     dialogDelete: false,
-    headers: [
-      { text: "id", value: "id" },
-      { text: "Name", value: "Name" },
-      { text: "Description", value: "Description" },
-      { text: "status", value: "status" },
-      { text: "Actions", value: "actions", sortable: false },
-    ],
+    // headers: [
+    //   { text: "id", value: "id" },
+    //   { text: "Name", value: "Name" },
+    //   { text: "Description", value: "Description" },
+    //   { text: "status", value: "status" },
+    //   { text: "Actions", value: "actions", sortable: false },
+    // ],
 
     editedIndex: -1,
     Table: -1,
@@ -154,53 +155,30 @@ export default {
     },
   },
 
-  created() {
-    this.initialize();
-  },
-
   //this for swich data value change
-  filters: {
-    changevalue: function (value) {
-      console.log(value);
-      return value == true ? "Active" : "Deactive";
-    },
-  },
+  // filters: {
+  //   changevalue: function (value) {
+  //     console.log(value);
+  //     return value == true ? "Active" : "Deactive";
+  //   },
+  // },
 
   methods: {
-    initialize() {
-      this.desserts = [
-        {
-          id: 1,
-          Name: "footware",
-          Description: " carried or worn by a person....",
-          status: "active",
-          Actions: "",
-        },
-        {
-          id: 2,
-          Name: "watch",
-          Description:
-            "A watch is a portable timepiece intended to be carried or worn by a person....",
-          status: "active",
-          Actions: "",
-        },
-      ];
-    },
     // this for open edit form
     editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
+      this.editedIndex = this.Categories.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
     //for delete item sure popup message display and ic ok them cancle value
     deleteItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
+      this.editedIndex = this.Categories.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialogDelete = true;
     },
 
     deleteItemConfirm() {
-      this.desserts.splice(this.editedIndex, 1);
+      this.Categories.splice(this.editedIndex, 1);
       this.closeDelete();
     },
 
@@ -224,10 +202,10 @@ export default {
     //this method for save edit data
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
-        localStorage.setItem("EditData", JSON.stringify(this.editedItem));
+        Object.assign(this.Categories[this.editedIndex], this.editedItem);
+        // localStorage.setItem("EditData", JSON.stringify(this.editedItem));
       } else {
-        this.desserts.push(this.editedItem);
+        this.Categories.push(this.editedItem);
       }
       this.close();
     },
