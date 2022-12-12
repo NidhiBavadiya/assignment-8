@@ -1,20 +1,33 @@
 <template>
-<!-- display table for items -->
-  <v-data-table
-    :headers="Itemheaders"
-    :items="itemlist"
-    class="elevation-1"
-  >
+  <!-- display table for items -->
+  <v-data-table :headers="Itemheaders" :items="itemlist" class="elevation-1">
+    <template v-slot:body="{ items }">
+      <tbody>
+        <tr v-for="item in items" :key="item.name">
+          <td>{{ item.id }}</td>
+          <td>{{ item.Name }}</td>
+          <td>{{ item.Category }}</td>
+          <td>{{ item.Description }}</td>
+          <td>{{ item.Price }}</td>
+          <td>{{ item.status == true ? "Active" : "Deactive" }}</td>
+          <td>
+            <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
+            <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+          </td>
+        </tr>
+      </tbody>
+    </template>
+
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title>All Items</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
-        <!-- add item button -->
+          <!-- add item button -->
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="light" dark class="mb-2" v-bind="attrs" v-on="on">
-             <router-link to = "/itemadd" class="btn_design"> New Item</router-link>
+              <router-link to="/itemadd" class="btn_design"> New Item</router-link>
             </v-btn>
           </template>
           <!-- form for add and edit data... -->
@@ -28,13 +41,18 @@
                 <v-row>
                   <!-- id -->
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.id" label="id"></v-text-field>
+                    <v-text-field
+                      v-model="editedItem.id"
+                      label="id"
+                      required
+                    ></v-text-field>
                   </v-col>
                   <!-- name -->
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
                       v-model="editedItem.name"
                       label="item name"
+                      required
                     ></v-text-field>
                   </v-col>
                   <!-- category -->
@@ -44,6 +62,7 @@
                       label="category"
                       v-model="editedItem.category"
                       Standard
+                      required
                     ></v-select>
                   </v-col>
                   <!-- description -->
@@ -55,6 +74,7 @@
                       :rules="DescriptionRules"
                       :counter="100"
                       label="Description"
+                      required
                     ></v-textarea
                   ></v-col>
 
@@ -63,14 +83,14 @@
                       v-model="editedItem.price"
                       prefix="$"
                       label="price"
+                      required
                     ></v-text-field>
                   </v-col>
 
                   <v-col cols="12" sm="6" md="4">
-                    <v-switch v-model="editedItem.status">
-                     <span>{{ value }}</span>
-                      </v-switch
-                    >
+                    <v-switch v-model="editedItem.status" required>
+                      <span>{{ value }}</span>
+                    </v-switch>
                   </v-col>
                 </v-row>
               </v-container>
@@ -110,7 +130,7 @@
 
 <script>
 export default {
-  props: ["Categories", "itemlist", "Itemheaders"],
+  props: ["Categories", "itemlist", "Itemheaders", "items"],
   data: () => ({
     dialog: false,
     dialogDelete: false,
@@ -140,9 +160,6 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
     },
-    value() {
-      return this.status === true ? "Active" : "deactive";
-    },
   },
 
   watch: {
@@ -153,18 +170,27 @@ export default {
       val || this.closeDelete();
     },
   },
-  // this for swich data value change
-  //   filters: {
-  //     changevalue: function (value) {
-  //       console.log(value);
-  //       return value == true ? "Active" : "Deactive";
-  //     },
-  //   },
+
   mounted() {
+    //get value
     const ItemValue = localStorage.getItem("Items");
     console.log(ItemValue);
+
+    this.Categorycheck();
   },
   methods: {
+    Categorycheck: function () {
+      this.Categories.forEach((element) => {
+        console.log(element.status);
+        console.log(element.Name);
+        if (element.status === true) {
+          return element.Name;
+        }
+        console.log(element.Name);
+        this.items.push(element.Name);
+      });
+    },
+
     editItem(item) {
       this.editedIndex = this.itemlist.indexOf(item);
       this.editedItem = Object.assign({}, item);
@@ -172,9 +198,7 @@ export default {
       const EditValue = localStorage.getItem("EditData");
       console.log(EditValue);
     },
-    toggle(){
-        
-    },
+    toggle() {},
 
     deleteItem(item) {
       this.editedIndex = this.itemlist.indexOf(item);
@@ -206,7 +230,7 @@ export default {
     save() {
       if (this.editedIndex > -1) {
         Object.assign(this.itemlist[this.editedIndex], this.editedItem);
-        localStorage.setItem("EditData", JSON.stringify(this.editedItem));
+        localStorage.setItem("Items", JSON.stringify(this.itemlist));
       } else {
         this.itemlist.push(this.editedItem);
       }
@@ -219,8 +243,8 @@ export default {
 .v-data-footer {
   display: none !important;
 }
-.btn_design{
-    text-decoration:none;
-    color:#ffffff;
+.btn_design {
+  text-decoration: none;
+  color: #ffffff;
 }
 </style>

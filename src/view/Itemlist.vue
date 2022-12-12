@@ -5,6 +5,7 @@
         :Categories="Categories"
         :itemlist="itemlist"
         :Itemheaders="Itemheaders"
+        :items="items"
       ></itemstable>
     </v-main>
   </v-app>
@@ -13,7 +14,7 @@
 <script>
 import ItemsTable from "../components/ItemsTable.vue";
 export default {
-  props: ["Categories", "itemlist", "Itemheaders"],
+  props: ["Categories", "itemlist", "Itemheaders","items"],
   components: {
     itemstable: ItemsTable,
   },

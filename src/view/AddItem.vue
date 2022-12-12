@@ -4,6 +4,7 @@
       :Categories="Categories"
       :itemlist="itemlist"
       :Itemheaders="Itemheaders"
+      :items="items"
     ></itemadd>
   </div>
 </template>
@@ -12,7 +13,7 @@
 import ItemAdd from "../components/ItemAdd.vue";
 
 export default {
-  props: ["Categories", "itemlist", "Itemheaders"],
+  props: ["Categories", "itemlist", "Itemheaders","items"],
   components: {
     itemadd: ItemAdd,
   },

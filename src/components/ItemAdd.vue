@@ -22,7 +22,7 @@
           <v-col cols="12" md="4" sm="4" class="form_col">
             <v-text-field
               v-model="Name"
-              :counter="10"
+              :counter="20"
               label="Name"
               required
             ></v-text-field>
@@ -32,7 +32,7 @@
         <!-- categories -->
         <v-row class="form_row">
           <v-col cols="12" md="4" sm="4" class="form_col">
-            <v-select :items="items" label="Category "></v-select>
+            <v-select :items="items" label="Category" v-model="Category"></v-select>
           </v-col>
         </v-row>
 
@@ -53,7 +53,12 @@
         <!-- price -->
         <v-row class="form_row">
           <v-col cols="12" md="4" sm="4">
-            <v-text-field v-model="Price" prefix="$" :rules="PriceRules" label="Price"></v-text-field>
+            <v-text-field
+              v-model="Price"
+              prefix="$"
+              :rules="PriceRules"
+              label="Price"
+            ></v-text-field>
           </v-col>
         </v-row>
 
@@ -70,7 +75,8 @@
             class="mb-2"
             v-bind="attrs"
             v-on="on"
-            v-on:click="AddItems()">
+            v-on:click="AddItems()"
+          >
             AddItem
           </v-btn>
         </v-row>
@@ -81,36 +87,51 @@
 
 <script>
 export default {
-  props: ["Categories", "headers", "itemlist"],
+  props: ["Categories", "headers", "itemlist", "items"],
   data: () => ({
     valid: true,
     ID: "",
     idRules: [
       (v) => !!v || "Id is required",
-      (v) => Number.isInteger(v) || 'The value must be an integer number',
+      (v) => Number.isInteger(Number(v)) || "The value must be an integer number",
       (v) => v.length <= 3 || "ID must be less than 10 characters",
     ],
     Name: "",
     Category: "",
+
     Description: "",
     DescriptionRules: [
       (v) => !!v || "Description is required",
       (v) => v.length <= 100 || "Description must be less than 100 characters",
     ],
     Price: "",
-    PriceRules:[
-    (v) => !!v || "price is required",
-     (v) => Number.isInteger(v) || 'The value must be an integer number',   
+    PriceRules: [
+      (v) => !!v || "price is required",
+      (v) => Number.isInteger(Number(v)) || "The value must be an integer number",
     ],
-    status: false,
+    status: "",
+    // items:['watch','footware','begs']
   }),
   mounted() {
     console.log(this.items);
     const CateValue = localStorage.getItem("Items");
     console.log(CateValue);
+
+    this.Categorycheck();
   },
 
   methods: {
+    Categorycheck: function () {
+      this.Categories.forEach((element) => {
+        console.log(element.status);
+        console.log(element.Name);
+        if (element.status === true) {
+          console.log(element.Name);
+          this.items.push(element.Name);
+        }
+      });
+    },
+
     //   method for new value push in array
     AddItems: function () {
       const newitem = {
@@ -128,7 +149,6 @@ export default {
       this.$router.push("/itemlist");
     },
     //get catagory from localstorage...
-
   },
 };
 </script>

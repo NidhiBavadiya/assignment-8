@@ -6,6 +6,21 @@
     disable-pagination="false"
     class="elevation-1"
   >
+    <template v-slot:body="{ items }">
+      <tbody>
+        <tr v-for="item in items" :key="item.name">
+          <td>{{ item.id }}</td>
+          <td>{{ item.Name }}</td>
+          <td>{{ item.Description }}</td>
+          <td>{{ item.status == true ? "Active" : "Deactive" }}</td>
+          <td>
+            <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
+            <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+          </td>
+        </tr>
+      </tbody>
+    </template>
+
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title> All Categories </v-toolbar-title>
@@ -50,11 +65,14 @@
                 </v-row>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
-                    <v-switch v-model="editedItem.status"> </v-switch>
+                    <v-switch v-model="editedItem.status">
+                      <!-- {{Categories.status|changevalue}} -->
+                    </v-switch>
                   </v-col>
                 </v-row>
               </v-container>
             </v-card-text>
+
             <!-- edit form save aur cancle button for edit data  -->
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -102,7 +120,6 @@ export default {
     dialog: false,
     dialogDelete: false,
     editedIndex: -1,
-    Table: -1,
 
     //blank array for add edit value...
     editedItem: {
@@ -137,18 +154,19 @@ export default {
     },
   },
 
-  //this for swich data value change
-  // filters: {
-  //   changevalue: function (value) {
-  //     console.log(value);
-  //     return value == true ? "Active" : "Deactive";
-  //   },
-  // },
-
   mounted() {
     const CateValue = localStorage.getItem("CategorieData");
     console.log(CateValue);
   },
+
+  //filter for change status value change
+  filters: {
+    changevalue: (value) => {
+      console.log(value);
+      return value == true ? "Active" : "Deactive";
+    },
+  },
+
   methods: {
     // this for open edit form
     editItem(item) {
@@ -164,7 +182,6 @@ export default {
       this.editedItem = Object.assign({}, item);
       this.dialogDelete = true;
     },
-
     deleteItemConfirm() {
       this.Categories.splice(this.editedIndex, 1);
       this.closeDelete();
@@ -191,8 +208,7 @@ export default {
     save() {
       if (this.editedIndex > -1) {
         Object.assign(this.Categories[this.editedIndex], this.editedItem);
-
-        localStorage.setItem("EditData", JSON.stringify(this.editedItem));
+        localStorage.setItem("CategorieData", JSON.stringify(this.Categories));
       } else {
         this.Categories.push(this.editedItem);
       }
@@ -209,7 +225,7 @@ export default {
   text-decoration: none;
   color: #ffffff;
 }
-/* .v-main {
-  padding: 61px 17px 0 148px !important ;
-} */
+.v-btn:hover {
+  background-color: gray;
+}
 </style>

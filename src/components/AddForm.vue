@@ -72,7 +72,7 @@ export default {
     ID: "",
     idRules: [
       (v) => !!v || "id is required",
-      (v) => Number.isInteger(v) || 'The value must be an integer number',
+      (v) => Number.isInteger(Number(v)) || "The value must be an integer number",
       (v) => v.length <= 3 || "id must be less than 10 characters",
     ],
     Name: "",
@@ -81,13 +81,14 @@ export default {
       (v) => !!v || "Description is required",
       (v) => v.length <= 100 || "Description must be less than 100 characters",
     ],
-    status: false,
+    status: "",
   }),
   mounted() {
     const CateValue = localStorage.getItem("CategorieData");
     console.log(CateValue);
     console.log(this.Categories);
   },
+
   // method for new value add
   methods: {
     AddItems: function () {

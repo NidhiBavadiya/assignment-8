@@ -2,11 +2,10 @@
   <v-app id="inspire">
     <v-navigation-drawer v-model="drawer" app>
       <!-- side bar dropdown menu -->
-
       <div class="text-center">
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn color="light" v-bind="attrs" v-on="on" block> Item Category</v-btn>
+            <v-btn color="light"  v-bind="attrs" v-on="on" block> Item Category</v-btn>
           </template>
           <v-list>
             <v-list-item
@@ -57,60 +56,62 @@
         :headers="headers"
         :itemlist="itemlist"
         :Itemheaders="Itemheaders"
+        :items="items"
       ></router-view>
-    
     </v-main>
   </v-app>
 </template>
 
 <script>
-
 export default {
   data: () => ({
     drawer: null,
+    items: [],
+    Categories: [
+      {
+        id: 1,
+        Name: "Footware",
+        Description: " carried or worn by a person....",
+        status: "Deactive",
+        Actions: "",
+      },
+      {
+        id: 2,
+        Name: "Watch",
+        Description:
+          "A watch is a portable timepiece intended to be carried or worn by a person....",
+        status: "Deactive",
+        Actions: "",
+      },
+      {
+        id: 3,
+        Name: "Begs",
+        Description:
+          "bag : a usually flexible container that may be closed for holding, ...",
+        status: "Deactive",
+        Actions: "",
+      },
+    ],
 
-    Categories : [
-        {
-          id: 1,
-          Name: "footware",
-          Description: " carried or worn by a person....",
-          status: "active",
-          Actions: "",
-        },
-        {
-          id: 2,
-          Name: "watch",
-          Description:
-            "A watch is a portable timepiece intended to be carried or worn by a person....",
-          status: "active",
-          Actions: "",
-        },
-      ],
-
-      itemlist : [
-        {
-          id: 1,
-          name: "Timex watch",
-          category: "watch",
-          Description:
-            "A watch is a portable timepiece intended to be carried or worn by a person....",
-          price: 4000,
-          status: "active",
-        },
-         {
-          id: 2,
-          name: "sandle",
-          category: "footware",
-          Description:
-            " to be carried or worn by a person....",
-          price: 500,
-          status: "active",
-        },
-      ],
-
-      // items:[
-
-      // ],
+    itemlist: [
+      {
+        id: 1,
+        Name: "Timex watch",
+        Category: "watch",
+        Description:
+          "A watch is a portable timepiece intended to be carried or worn by a person....",
+        Price: 4000,
+        status: "Active",
+      },
+      {
+        id: 2,
+        Name: "sandle",
+        Category: "footware",
+        Description: " to be carried or worn by a person....",
+        Price: 500,
+        status: "Deactive",
+      },
+    ],
 
     headers: [
       { text: "id", value: "id" },
@@ -120,21 +121,21 @@ export default {
       { text: "Actions", value: "actions", sortable: false },
     ],
 
-     Itemheaders: [
+    Itemheaders: [
       { text: "id", value: "id" },
-      { text: "name", value: "name" },
-      { text: "category", value: "category" },
+      { text: "Name", value: "Name" },
+      { text: "Category", value: "Category" },
       { text: "Description", value: "Description" },
-      { text: "price", value: "price" },
+      { text: "Price", value: "Price" },
       { text: "status", value: "status" },
       { text: "Actions", value: "actions", sortable: false },
     ],
   }),
-    mounted() {
-      localStorage.setItem("CategorieData", JSON.stringify(this.Categories));
-
-      localStorage.setItem("Items", JSON.stringify(this.itemlist));
-    },
+  
+  mounted() {
+    localStorage.setItem("CategorieData", JSON.stringify(this.Categories));
+    localStorage.setItem("Items", JSON.stringify(this.itemlist));
+  },
 };
 </script>
 
@@ -148,5 +149,12 @@ a {
 }
 .item_list {
   color: #000000;
+}
+.v-toolbar__content, .v-toolbar__extension {
+    align-items: center;
+    display: flex;
+    position: relative;
+    z-index: 0;
+    background-color: lavender;
 }
 </style>
