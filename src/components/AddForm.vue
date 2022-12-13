@@ -1,67 +1,71 @@
 <template>
-  <v-form v-model="valid">
-    <v-container>
-      <div class="form">
-        <h2>Add new Categories</h2>
+  <div class="dataform">
+    <v-form v-model="valid">
+      <v-container>
+        <v-row>
+          <v-cols cols="12" md="6" sm="6" lg="4" class="form_col">
+            <div class="form">
+            <div class="title">
+                   <h2>Add new Categories</h2>
+            </div>
+         
 
-        <!-- id -->
-        <v-row class="form_row">
-          <v-col cols="12" md="4" sm="4" class="form_col">
-            <v-text-field
-              v-model="ID"
-              :rules="idRules"
-              :counter="3"
-              label="ID"
-              required
-            ></v-text-field>
-          </v-col>
-        </v-row>
+              <!-- id -->
 
-        <!-- name -->
-        <v-row class="form_row">
-          <v-col cols="12" md="4" sm="4" class="form_col">
-            <v-text-field
-              v-model="Name"
-              :counter="10"
-              label="Name"
-              required
-            ></v-text-field>
-          </v-col>
-        </v-row>
+              <v-text-field
+                class="text-light"
+                v-model="ID"
+                :rules="idRules"
+                :counter="3"
+                label="ID"
+                required
+              ></v-text-field>
 
-        <!-- discription -->
-        <v-row class="form_row">
-          <v-col cols="12" md="4" sm="4" class="form_col">
-            <v-textarea
-              solo
-              v-model="Description"
-              name="Description"
-              :rules="DescriptionRules"
-              :counter="100"
-              label="Description"
-            ></v-textarea>
-          </v-col>
+              <!-- name -->
+
+              <v-text-field
+                v-model="name"
+                :counter="10"
+                label="name"
+                required
+                class="custom-placeholer-color"
+              ></v-text-field>
+
+              <!-- discription -->
+
+              <v-textarea
+                solo
+                v-model="description"
+                name="description"
+                :rules="descriptionRules"
+                :counter="100"
+                label="description"
+              ></v-textarea>
+
+              <!-- status -->
+              <v-row class="form_row">
+                <v-switch v-model="status" color="#00ADB5"></v-switch>
+              </v-row>
+              <!-- add button -->
+              <v-row class="form_row">
+                <v-col md="3" class="btnadd">
+                  <v-btn
+                    class="btn"
+                    v-bind="attrs"
+                    v-on="on"
+                    v-on:click="AddItems()"
+                    color="#00ADB5"
+                  >
+                    AddItem
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </div>
+          </v-cols>
         </v-row>
-        <!-- status -->
-        <v-row class="form_row">
-          <v-switch v-model="status"></v-switch>
-        </v-row>
-        <!-- add button -->
-        <v-row class="form_row">
-          <v-btn
-            color="primary"
-            dark
-            class="mb-2"
-            v-bind="attrs"
-            v-on="on"
-            v-on:click="AddItems()"
-          >
-            AddItem
-          </v-btn>
-        </v-row>
-      </div>
-    </v-container>
-  </v-form>
+      </v-container>
+    </v-form>
+  </div>
 </template>
 
 <script>
@@ -75,9 +79,9 @@ export default {
       (v) => Number.isInteger(Number(v)) || "The value must be an integer number",
       (v) => v.length <= 3 || "id must be less than 10 characters",
     ],
-    Name: "",
-    Description: "",
-    DescriptionRules: [
+    name: "",
+    description: "",
+    descriptionRules: [
       (v) => !!v || "Description is required",
       (v) => v.length <= 100 || "Description must be less than 100 characters",
     ],
@@ -94,8 +98,8 @@ export default {
     AddItems: function () {
       const newvalue = {
         id: this.ID,
-        Name: this.Name,
-        Description: this.Description,
+        name: this.name,
+        description: this.description,
         status: this.status,
       };
       console.log(newvalue);
@@ -108,7 +112,19 @@ export default {
 };
 </script>
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
+
 .form {
-  padding: 50px 0 0 100px;
+  padding: 20px 50px;
+  margin: 10px 200px;
+  box-shadow: 0px 5px 20px black;
+  border-radius: 30px;
+}
+.dataform {
+  height: 100%;
+}
+title{
+  background:#222831;
 }
 </style>
+black:-#222831 gray:-#393E46 blue:-#00ADB5 #EEEEEE

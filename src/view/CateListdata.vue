@@ -22,4 +22,11 @@ export default {
   data: () => ({ drawer: null }),
 };
 </script>
-<style scoped></style>
+<style scoped>
+.v-main__wrap {
+  flex: 1 1 auto;
+  max-width: 100%;
+  position: relative;
+  padding: 20px;
+}
+</style>
