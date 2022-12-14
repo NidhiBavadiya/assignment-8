@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="add">
     <addform :Categories="Categories" :headers="headers" :items="items"></addform>
   </div>
 </template>
@@ -14,3 +14,17 @@ export default {
   },
 };
 </script>
+<style>
+#add{
+  height:100vh;
+}
+
+.v-main__wrap {
+    flex: 1 1 auto;
+    max-width: 100%;
+    position: relative;
+    height:100vh;
+    
+}
+
+</style>

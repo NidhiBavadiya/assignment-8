@@ -41,12 +41,58 @@
           <v-spacer></v-spacer>
           <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ on, attrs }">
-              <router-link to="/adddata" class="btn_design"
-                ><v-btn color="#22223a" dark class="mb-2" v-bind="attrs" v-on="on">
-                  AddItem
-                </v-btn></router-link
-              >
+              <v-btn color="#22223a" dark class="mb-2" v-bind="attrs" v-on="on">
+                <router-link to="/adddata" class="btn_design"> AddItem </router-link>
+              </v-btn>
             </template>
+
+            <v-card>
+              <v-card-title>
+                <span class="text-h5">{{ formTitle }}</span>
+              </v-card-title>
+              <!-- display table data name id status etc....  -->
+              <v-card-text>
+                <!-- form for edit.....  -->
+                <v-container>
+                  <v-row class="justify-content-around">
+                    <!-- id -->
+                    <v-col cols="12" sm="6" md="6">
+                      id
+                      <v-text-field v-model="editedItem.id" label="id"></v-text-field>
+                    </v-col>
+                    <!-- name -->
+                    <v-col cols="12" sm="6" md="6">
+                      name
+                      <v-text-field v-model="editedItem.name" label="name"></v-text-field>
+                    </v-col>
+                    <!-- description -->
+                    <v-col cols="12" sm="6" md="6">
+                      <v-textarea
+                        solo
+                        v-model="editedItem.description"
+                        name="description"
+                        :rules="descriptionRules"
+                        :counter="100"
+                        label="description"
+                      ></v-textarea>
+                    </v-col>
+                 
+                  <!-- toggle switch -->
+                
+                    <v-col cols="12" sm="6" md="6">
+                      <v-switch v-model="editedItem.status"> </v-switch>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-text>
+
+              <!-- edit form save aur cancle button for edit data  -->
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="close"> Cancel </v-btn>
+                <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
+              </v-card-actions>
+            </v-card>
           </v-dialog>
 
           <!--card for the delete message sure value popups -->
@@ -187,7 +233,6 @@ export default {
 </script>
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
-
 h3 {
   font-family: "Open Sans", sans-serif;
 }
@@ -220,8 +265,9 @@ span {
   font-size: 16px;
   color: #fff;
 }
-.v-application a {
-  color: #ffffff;
+.v-toolbar__content,
+.v-toolbar__extension {
+  padding: 4px !important;
 }
 .table_title {
   margin: 0px 0 30px 0;

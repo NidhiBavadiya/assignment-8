@@ -1,5 +1,6 @@
 <template>
-  <v-app id="inspire">
+<div id="category">
+    <v-app id="inspire">
     <v-main class="table_main">
       <categories
         :Categories="Categories"
@@ -8,6 +9,7 @@
       ></categories>
     </v-main>
   </v-app>
+</div>
 </template>
 
 <script>
@@ -23,6 +25,10 @@ export default {
 };
 </script>
 <style scoped>
+
+.table_main{
+  height:100%;
+}
 .v-main__wrap {
   flex: 1 1 auto;
   max-width: 100%;

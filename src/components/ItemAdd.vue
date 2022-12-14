@@ -145,13 +145,11 @@ export default {
 </script>
 
 <style scoped>
-.row {
-  width: 60%;
-  max-width: 100%;
-}
+
 .form {
   padding: 20px 50px;
-  margin: 10px 20 0px;
+  margin: 10px auto;
+  width:50%;
   box-shadow: 0px 5px 20px #22223a;
   background: #fff;
 }
@@ -166,24 +164,5 @@ h2 {
 .v-application .primary--text {
   color: #222230 !important;
 }
-@media (max-width: 1600px) {
-  .row {
-    width: 80%;
-  }
-}
-@media (max-width: 1250px) {
-  .row {
-    width: 100%;
-  }
-}
-@media (max-width: 976px) {
-  .row {
-    width: 100%;
-  }
-}
-@media (max-width: 576px) {
-  .row {
-    width: 100%;
-  }
-}
+
 </style>

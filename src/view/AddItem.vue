@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="additem">
     <itemadd
       :Categories="Categories"
       :itemlist="itemlist"
@@ -19,3 +19,16 @@ export default {
   },
 };
 </script>
+<style scoped>
+*{
+  overflow: hidden;
+}
+.v-main__wrap {
+    flex: 1 1 auto;
+    max-width: 100%;
+    position: relative;
+}
+#additem{
+  height:100vh;
+}
+</style>

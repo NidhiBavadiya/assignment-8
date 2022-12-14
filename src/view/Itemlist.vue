@@ -29,7 +29,9 @@ export default {
     flex: 1 1 auto;
     max-width: 100%;
     position: relative;
-    background-color:gray;
+}
+#itemlist{
+  height:100vh;
 }
 
 </style>

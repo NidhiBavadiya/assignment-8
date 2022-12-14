@@ -4,36 +4,45 @@
       <div class="sidebar">
         <v-navigation-drawer color="#22223a" v-model="drawer" app>
           <!-- side bar dropdown menu -->
-
           <v-expansion-panels>
             <v-expansion-panel>
               <v-expansion-panel-header color="#22223a">
-                <span>Item Category</span>
-              </v-expansion-panel-header>
-              <v-expansion-panel-content color="#22223a">
-                <router-link to="/">All Categories</router-link>
-              </v-expansion-panel-content>
-              <v-expansion-panel-content color="#22223a">
-                <router-link to="/adddata" class="item_list"
-                  ><p>Add New Categories</p></router-link
+                <v-hover color="white">
+                  <span><h5>Item Category</h5></span></v-hover
                 >
-              </v-expansion-panel-content>
+              </v-expansion-panel-header>
+
+              <router-link to="/"
+                ><v-expansion-panel-content color="#22223a">
+                  All Categories
+                </v-expansion-panel-content></router-link
+              >
+
+              <router-link to="/adddata" class="item_list"
+                ><v-expansion-panel-content color="#22223a">
+                  <p>Add New Categories</p>
+                </v-expansion-panel-content></router-link
+              >
             </v-expansion-panel>
           </v-expansion-panels>
 
           <v-expansion-panels>
             <v-expansion-panel>
               <v-expansion-panel-header color="#22223a">
-                <span>Items</span>
+                <span><h5>Items</h5></span>
               </v-expansion-panel-header>
-              <v-expansion-panel-content color="#22223a">
-                <router-link to="/itemlist">All Items</router-link>
-              </v-expansion-panel-content>
-              <v-expansion-panel-content color="#22223a">
-                <router-link to="/itemadd" class="item_list"
-                  ><p>Add New Item</p></router-link
-                >
-              </v-expansion-panel-content>
+
+              <router-link to="/itemlist">
+                <v-expansion-panel-content color="#22223a">
+                  All Items
+                </v-expansion-panel-content></router-link
+              >
+
+              <router-link to="/itemadd" class="item_list"
+                ><v-expansion-panel-content color="#22223a">
+                  <p>Add New Item</p>
+                </v-expansion-panel-content></router-link
+              >
             </v-expansion-panel>
           </v-expansion-panels>
 
@@ -106,7 +115,7 @@ export default {
         category: "footware",
         description: " to be carried or worn by a person....",
         price: 500,
-        status: "Deactive",
+        status: "Active",
       },
     ],
 
@@ -136,22 +145,20 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
-.mdi-chevron-down::before {
-  content: "\F0140";
-}
-.mdi:before,
-.mdi-set {
-  color: #fff !important;
-}
+* {
+  padding: 0;
+  margin: 0;
+    /* overflow:hidden !important; */
+} 
 .mainpage {
   padding: 0;
   font-family: "Open Sans", sans-serif;
 }
 a {
   font-family: "Open Sans", sans-serif;
-  text-decoration: none;
+  text-decoration: none !important;
   color: #000000;
 }
 .item_list {
@@ -182,11 +189,10 @@ p {
   display: flex;
   position: relative;
   z-index: 0;
-  padding: 0 !important;
 }
 .v-toolbar__content,
 .v-toolbar__extension {
-  padding: 4px;
+  padding: 4px !important;
 }
 h4 {
   color: #fff;

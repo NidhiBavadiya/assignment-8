@@ -50,7 +50,7 @@
               </v-row>
               <!-- add button -->
               <v-row class="form_row">
-                <v-col md="3" class="btnadd">
+                <v-col md="6" class="btnadd">
                   <v-btn
                     class="btn"
                     v-bind="attrs"
@@ -117,13 +117,11 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
 
-.row {
-  width: 60%;
-  max-width: 100%;
-}
 .form {
   padding: 20px 50px;
-  margin: 10px 200px;
+  margin: 10px auto;
+  width:50%;
+  text-align:center;
   box-shadow: 0px 5px 20px #22223a;
   border-radius: 30px;
 }
@@ -141,24 +139,5 @@ h2 {
 title {
   background: #222831;
 }
-@media (max-width: 1600px) {
-  .row {
-    width: 80%;
-  }
-}
-@media (max-width: 1250px) {
-  .row {
-    width: 100%;
-  }
-}
-@media (max-width: 976px) {
-  .row {
-    width: 100%;
-  }
-}
-@media (max-width: 576px) {
-  .row {
-    width: 100%;
-  }
-}
+
 </style>

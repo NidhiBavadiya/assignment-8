@@ -39,13 +39,83 @@
           <v-dialog v-model="dialog" max-width="500px">
             <!-- add item button -->
             <template v-slot:activator="{ on, attrs }">
-              <router-link to="/itemadd" class="btn_design"
-                ><v-btn color="#22223a" dark class="mb-2" v-bind="attrs" v-on="on">
-                  New Item
-                </v-btn></router-link
-              >
+               <router-link to="/itemadd" class="btn_design"><v-btn color="#22223a" dark class="mb-2" v-bind="attrs" v-on="on">
+                New Item
+              </v-btn></router-link>
             </template>
-            <!-- form for add and edit data... -->
+            <!-- form for edit data... -->
+            <v-card>
+              <v-card-title>
+                <span class="text-h5">{{ formTitle }}</span>
+              </v-card-title>
+
+              <v-card-text>
+                <v-container>
+                  <v-row class=" justify-content-around">
+                    <!-- id -->
+                    <v-col cols="12" sm="6" md="6">
+                      <v-text-field
+                        v-model="editedItem.id"
+                        label="id"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    <!-- name -->
+                    <v-col cols="12" sm="6" md="6">
+                      <v-text-field
+                        v-model="editedItem.name"
+                        label="item name"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    <!-- category -->
+                    <v-col cols="12" sm="6" md="6">
+                      <!-- <v-select
+                        :Categories="Categories"
+                        label="category"
+                        v-model="editedItem.category"
+                        Standard
+                        required
+                      ></v-select> -->
+                      <v-select :items="items" label="category" v-model="editedItem.category"></v-select>
+                    </v-col>
+                    <!-- description -->
+                    <v-col cols="12" sm="6" md="6">
+                      <v-textarea
+                        solo
+                        v-model="editedItem.description"
+                        name="description"
+                        :rules="descriptionRules"
+                        :counter="100"
+                        label="description"
+                        required
+                      ></v-textarea
+                    ></v-col>
+                    <!-- price -->
+                    <v-col cols="12" sm="6" md="6">
+                      <v-text-field
+                        v-model="editedItem.price"
+                        prefix="$"
+                        label="price"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    <!-- status -->
+                    <v-col cols="12" sm="6" md="6">
+                      <v-switch v-model="editedItem.status" required>
+                        <span>{{ value }}</span>
+                      </v-switch>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-text>
+              <!-- save & Cancel button -->
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="close"> Cancel </v-btn>
+                <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
+              </v-card-actions>
+            </v-card>
           </v-dialog>
           <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
@@ -186,23 +256,22 @@ export default {
 </script>
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
-
 h2 {
-  font-family: "Open Sans", sans-serif;
+ font-family: "Open Sans", sans-serif;
 }
 .mytable table tr {
   background-color: white;
   border: 1px solid black;
 }
-h3 {
-  font-family: "Open Sans", sans-serif;
-  font-size: 35px;
-  color: #22223a;
+h3{
+   font-family: "Open Sans", sans-serif;
+   font-size:35px;
+   color:#22223a;
 }
 .v-data-table th {
-  background-color: #22223a; /*  #1d1e22 */
+  background-color:  #22223a;/*  #1d1e22 */
   border: 1px solid #e0e0e0;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid black ;
 }
 .mytable table td {
   background-color: white;
@@ -226,6 +295,6 @@ span {
   margin: 0px 0 30px 0;
 }
 .v-application a {
-  color: #ffffff !important;
+    color: #ffffff !important;
 }
 </style>
