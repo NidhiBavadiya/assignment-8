@@ -31,4 +31,5 @@ export default {
     position: relative;
     background-color:gray;
 }
+
 </style>

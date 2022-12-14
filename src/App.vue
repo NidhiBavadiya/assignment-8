@@ -2,49 +2,50 @@
   <div class="mainpage">
     <v-app id="inspire">
       <div class="sidebar">
-        <v-navigation-drawer v-model="drawer" app>
+        <v-navigation-drawer color="#22223a" v-model="drawer" app>
           <!-- side bar dropdown menu -->
-          <div class="text-center">
-            <v-menu offset-y>
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn color="#fff" v-bind="attrs" v-on="on" block> Item Category</v-btn>
-              </template>
-              <v-list>
-                <router-link to="/" class="item_list"
-                  ><v-list-item><p>All Categories</p></v-list-item></router-link
-                >
+
+          <v-expansion-panels>
+            <v-expansion-panel>
+              <v-expansion-panel-header color="#22223a">
+                <span>Item Category</span>
+              </v-expansion-panel-header>
+              <v-expansion-panel-content color="#22223a">
+                <router-link to="/">All Categories</router-link>
+              </v-expansion-panel-content>
+              <v-expansion-panel-content color="#22223a">
                 <router-link to="/adddata" class="item_list"
-                  ><v-list-item><p>Add New Categories</p></v-list-item></router-link
+                  ><p>Add New Categories</p></router-link
                 >
-              </v-list>
-            </v-menu>
-          </div>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
 
-          <div class="text-center">
-            <v-menu offset-y>
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn color="#fff" v-bind="attrs" v-on="on" block>Items </v-btn>
-              </template>
-              <v-list>
-                <router-link to="/itemlist" class="item_list">
-                  <v-list-item><p>All Items</p></v-list-item></router-link
-                >
-
+          <v-expansion-panels>
+            <v-expansion-panel>
+              <v-expansion-panel-header color="#22223a">
+                <span>Items</span>
+              </v-expansion-panel-header>
+              <v-expansion-panel-content color="#22223a">
+                <router-link to="/itemlist">All Items</router-link>
+              </v-expansion-panel-content>
+              <v-expansion-panel-content color="#22223a">
                 <router-link to="/itemadd" class="item_list"
-                  ><v-list-item><p>Add New Item</p></v-list-item></router-link
+                  ><p>Add New Item</p></router-link
                 >
-              </v-list>
-            </v-menu>
-          </div>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
 
           <!-- -->
         </v-navigation-drawer>
       </div>
       <v-app-bar app>
-      <v-toolbar color="#BDBDBD">
-        <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-  
-        <v-toolbar-title>inventory system</v-toolbar-title></v-toolbar>
+        <v-toolbar color="#22223a">
+          <v-app-bar-nav-icon @click="drawer = !drawer" color="#fff"></v-app-bar-nav-icon>
+
+          <v-toolbar-title><h4>inventory system</h4></v-toolbar-title></v-toolbar
+        >
       </v-app-bar>
       <v-main>
         <router-view
@@ -137,11 +138,18 @@ export default {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
+.mdi-chevron-down::before {
+  content: "\F0140";
+}
+.mdi:before,
+.mdi-set {
+  color: #fff !important;
+}
 .mainpage {
   padding: 0;
   font-family: "Open Sans", sans-serif;
 }
-a{
+a {
   font-family: "Open Sans", sans-serif;
   text-decoration: none;
   color: #000000;
@@ -167,13 +175,24 @@ a{
 }
 p {
   font-size: 16px;
+  color: #fff;
 }
-.v-toolbar__content, .v-toolbar__extension {
-    align-items: center;
-    display: flex;
-    position: relative;
-    z-index: 0;
-    padding: 0 !important;
+.v-toolbar__content {
+  align-items: center;
+  display: flex;
+  position: relative;
+  z-index: 0;
+  padding: 0 !important;
 }
-
+.v-toolbar__content,
+.v-toolbar__extension {
+  padding: 4px;
+}
+h4 {
+  color: #fff;
+}
+.v-list {
+  background: #22223a !important;
+  color: rgba(0, 0, 0, 0.87);
+}
 </style>

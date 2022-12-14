@@ -1,15 +1,17 @@
 <template>
-  <div class="dataform">
+  <div class="itemform">
     <v-form v-model="valid">
       <v-container>
         <v-row>
+          <v-cols lg="4"></v-cols>
           <v-cols cols="12" md="6" sm="6" lg="4" class="form_col">
             <div class="form">
-            <div class="title">
-                   <h2>Add new Categories</h2>
-            </div>
-         
+              <!-- title of form -->
+              <div class="title">
+                <h2>Add new Categories</h2>
+              </div>
 
+              <!-- form input  -->
               <!-- id -->
 
               <v-text-field
@@ -44,7 +46,7 @@
 
               <!-- status -->
               <v-row class="form_row">
-                <v-switch v-model="status" color="#00ADB5"></v-switch>
+                <v-switch v-model="status" color="#22223a"></v-switch>
               </v-row>
               <!-- add button -->
               <v-row class="form_row">
@@ -54,14 +56,15 @@
                     v-bind="attrs"
                     v-on="on"
                     v-on:click="AddItems()"
-                    color="#00ADB5"
-                  >
-                    AddItem
+                    color="#22223a"
+                    ><span> AddItem</span>
                   </v-btn>
                 </v-col>
               </v-row>
+              <!--  -->
             </div>
           </v-cols>
+          <v-cols lg="4"></v-cols>
         </v-row>
       </v-container>
     </v-form>
@@ -114,17 +117,48 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
 
+.row {
+  width: 60%;
+  max-width: 100%;
+}
 .form {
   padding: 20px 50px;
   margin: 10px 200px;
-  box-shadow: 0px 5px 20px black;
+  box-shadow: 0px 5px 20px #22223a;
   border-radius: 30px;
+}
+h2 {
+  background: #222230;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  border-radius: 34px;
+  font-size: calc(1.325rem + 0.9vw);
 }
 .dataform {
   height: 100%;
 }
-title{
-  background:#222831;
+title {
+  background: #222831;
+}
+@media (max-width: 1600px) {
+  .row {
+    width: 80%;
+  }
+}
+@media (max-width: 1250px) {
+  .row {
+    width: 100%;
+  }
+}
+@media (max-width: 976px) {
+  .row {
+    width: 100%;
+  }
+}
+@media (max-width: 576px) {
+  .row {
+    width: 100%;
+  }
 }
 </style>
-black:-#222831 gray:-#393E46 blue:-#00ADB5 #EEEEEE
