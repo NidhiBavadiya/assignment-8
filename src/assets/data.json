@@ -1,0 +1,64 @@
+{ "Categories": [
+      {
+        "id": 1,
+        "name": "Footware",
+        "description": " carried or worn by a person....",
+        "status": "Active",
+        "Actions": ""
+      },
+      {
+        "id": 2,
+        "name": "Watch",
+        "description":
+          "A watch is a portable timepiece intended to be carried or worn by a person....",
+        "status": "Active",
+        "Actions": ""
+      },
+      {
+        "id": 3,
+        "name": "Begs",
+        "description":
+          "bag : a usually flexible container that may be closed for holding, ...",
+        "status": "Deactive",
+        "Actions": ""
+      }
+    ],
+
+    "itemlist": [
+        {
+          "id": 1,
+          "name": "Timex watch",
+          "category": "watch",
+          "description": "A watch is a portable timepiece intended ....",
+          "price": 4000,
+          "status": "Active"
+        },
+        {
+          "id": 2,
+          "name": "sandle",
+          "category": "footware",
+          "description": " to be carried or worn by a person....",
+          "price": 500,
+          "status": "Active"
+        }
+      ],
+
+      "headers": [
+        { "text": "id", "value": "id" },
+        { "text": "name", "value": "name" },
+        { "text": "description", "value": "description" },
+        { "text": "status", "value": "status" },
+        { "text": "Actions", "value": "actions", "sortable": false }
+      ],
+  
+      "Itemheaders": [
+        { "text": "id", "value": "id" },
+        { "text": "name", "value": "name" },
+        { "text": "category", "value": "category" },
+        { "text": "description", "value": "description" },
+        { "text": "price", "value": "price" },
+        { "text": "status", "value": "status" },
+        { "text": "Actions", "value": "actions", "sortable": false }
+      ]
+     
+    }

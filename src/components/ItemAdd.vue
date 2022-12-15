@@ -79,8 +79,8 @@
 </template>
 
 <script>
+import data from "../assets/data.json";
 export default {
-  props: ["Categories", "headers", "itemlist", "items"],
   data: () => ({
     valid: true,
     ID: "",
@@ -103,11 +103,13 @@ export default {
       (v) => Number.isInteger(Number(v)) || "The value must be an integer number",
     ],
     status: "",
-    // items:['watch','footware','begs']
+
+    //json array object
+    data: data,
   }),
   mounted() {
-    // const CateValue = localStorage.getItem("Items");
-    // console.log(CateValue);
+    const CateValue = localStorage.getItem("Items");
+    console.log(CateValue);
 
     this.Categorycheck();
   },
@@ -115,9 +117,11 @@ export default {
   methods: {
     Categorycheck: function () {
       this.items = [];
-      console.log(this.Categories);
-      this.Categories.forEach((element) => {
+      console.log(this.data.Categories);
+      this.data.Categories.forEach((element) => {
         if (element.status === true || element.status === "Active") {
+           console.log(element.status);
+        console.log(element.name);
           this.items.push(element.name);
         }
       });
@@ -134,35 +138,12 @@ export default {
         status: this.status,
       };
       console.log(newitem);
-      this.itemlist.push(newitem);
-      console.log(this.itemlist);
-      localStorage.setItem("Items", JSON.stringify(this.itemlist));
+      this.data.itemlist.push(newitem);
+      console.log(this.data.itemlist);
+      localStorage.setItem("Items", JSON.stringify(this.data.itemlist));
       this.$router.push("/itemlist");
     },
     //get catagory from localstorage...
   },
 };
 </script>
-
-<style scoped>
-
-.form {
-  padding: 20px 50px;
-  margin: 10px auto;
-  width:50%;
-  box-shadow: 0px 5px 20px #22223a;
-  background: #fff;
-}
-h2 {
-  background: #222230;
-  color: #fff;
-  text-align: center;
-  padding: 10px;
-  border-radius: 34px;
-  font-size: calc(1.325rem + 0.9vw);
-}
-.v-application .primary--text {
-  color: #222230 !important;
-}
-
-</style>

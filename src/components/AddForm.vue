@@ -8,7 +8,7 @@
             <div class="form">
               <!-- title of form -->
               <div class="title">
-                <h2>Add new Categories</h2>
+                <span class="text-h5">{{ formTitle }}</span>
               </div>
 
               <!-- form input  -->
@@ -72,8 +72,8 @@
 </template>
 
 <script>
+import data from "../assets/data.json";
 export default {
-  props: ["Categories", "headers"],
   data: () => ({
     valid: true,
     ID: "",
@@ -89,13 +89,15 @@ export default {
       (v) => v.length <= 100 || "Description must be less than 100 characters",
     ],
     status: "",
+    //json array object
+    data: data,
   }),
+
   mounted() {
     const CateValue = localStorage.getItem("CategorieData");
     console.log(CateValue);
-    console.log(this.Categories);
+    console.log(this.data.Categories);
   },
-
   // method for new value add
   methods: {
     AddItems: function () {
@@ -106,38 +108,12 @@ export default {
         status: this.status,
       };
       console.log(newvalue);
-      this.Categories.push(newvalue);
-      console.log(this.Categories);
-      localStorage.setItem("CategorieData", JSON.stringify(this.Categories));
+      this.data.Categories.push(newvalue);
+      console.log(this.data.Categories);
+      localStorage.setItem("CategorieData", JSON.stringify(this.data.Categories));
       this.$router.push("/");
     },
   },
 };
 </script>
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
-
-.form {
-  padding: 20px 50px;
-  margin: 10px auto;
-  width:50%;
-  text-align:center;
-  box-shadow: 0px 5px 20px #22223a;
-  border-radius: 30px;
-}
-h2 {
-  background: #222230;
-  color: #fff;
-  text-align: center;
-  padding: 10px;
-  border-radius: 34px;
-  font-size: calc(1.325rem + 0.9vw);
-}
-.dataform {
-  height: 100%;
-}
-title {
-  background: #222831;
-}
-
-</style>
+<style></style>

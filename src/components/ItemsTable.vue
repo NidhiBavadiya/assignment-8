@@ -1,7 +1,11 @@
 <template>
   <div class="container">
     <!-- display table for items -->
-    <v-data-table :headers="Itemheaders" :items="itemlist" class="elevation-1 mytable">
+    <v-data-table
+      :headers="data.Itemheaders"
+      :items="data.itemlist"
+      class="elevation-1 mytable"
+    >
       <template v-slot:body="{ items }">
         <tbody>
           <tr v-for="item in items" :key="item.name">
@@ -39,19 +43,24 @@
           <v-dialog v-model="dialog" max-width="500px">
             <!-- add item button -->
             <template v-slot:activator="{ on, attrs }">
-               <router-link to="/itemadd" class="btn_design"><v-btn color="#22223a" dark class="mb-2" v-bind="attrs" v-on="on">
+              <router-link to="/itemadd" class="btn_design"
+                ><v-btn color="#22223a" dark class="mb-2" v-bind="attrs" v-on="on">
+                  New Item
+                </v-btn></router-link
+              >
+              <!-- <v-btn color="#22223a" dark class="mb-2" v-bind="attrs" v-on="on">
                 New Item
-              </v-btn></router-link>
+              </v-btn> -->
             </template>
             <!-- form for edit data... -->
             <v-card>
-              <v-card-title>
+              <v-card-title class="formtitle">
                 <span class="text-h5">{{ formTitle }}</span>
               </v-card-title>
 
               <v-card-text>
                 <v-container>
-                  <v-row class=" justify-content-around">
+                  <v-row class="justify-content-around">
                     <!-- id -->
                     <v-col cols="12" sm="6" md="6">
                       <v-text-field
@@ -70,14 +79,11 @@
                     </v-col>
                     <!-- category -->
                     <v-col cols="12" sm="6" md="6">
-                      <!-- <v-select
-                        :Categories="Categories"
+                      <v-select
+                        :items="items"
                         label="category"
                         v-model="editedItem.category"
-                        Standard
-                        required
-                      ></v-select> -->
-                      <v-select :items="items" label="category" v-model="editedItem.category"></v-select>
+                      ></v-select>
                     </v-col>
                     <!-- description -->
                     <v-col cols="12" sm="6" md="6">
@@ -144,12 +150,13 @@
 </template>
 
 <script>
+import data from "../assets/data.json";
 export default {
-  props: ["Categories", "itemlist", "Itemheaders", "items"],
   data: () => ({
     dialog: false,
     dialogDelete: false,
-
+    //json array object
+    data: data,
     editedIndex: -1,
     editedItem: {
       id: "",
@@ -196,19 +203,20 @@ export default {
   methods: {
     Categorycheck: function () {
       this.items = [];
-      this.Categories.forEach((element) => {
+      console.log(this.data.Categories);
+      this.data.Categories.forEach((element) => {
         console.log(element.status);
         console.log(element.name);
-        if (element.status === true) {
-          return element.name;
+        if (element.status === true || element.status === "Active") {
+          console.log(element.name);
+          console.log(element.status);
+          this.items.push(element.name);
         }
-        console.log(element.name);
-        this.items.push(element.name);
       });
     },
 
     editItem(item) {
-      this.editedIndex = this.itemlist.indexOf(item);
+      this.editedIndex = this.data.itemlist.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
       const EditValue = localStorage.getItem("EditData");
@@ -216,13 +224,13 @@ export default {
     },
 
     deleteItem(item) {
-      this.editedIndex = this.itemlist.indexOf(item);
+      this.editedIndex = this.data.itemlist.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialogDelete = true;
     },
 
     deleteItemConfirm() {
-      this.itemlist.splice(this.editedIndex, 1);
+      this.data.itemlist.splice(this.editedIndex, 1);
       this.closeDelete();
     },
 
@@ -244,57 +252,13 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.itemlist[this.editedIndex], this.editedItem);
-        localStorage.setItem("Items", JSON.stringify(this.itemlist));
+        Object.assign(this.data.itemlist[this.editedIndex], this.editedItem);
+        localStorage.setItem("Items", JSON.stringify(this.data.itemlist));
       } else {
-        this.itemlist.push(this.editedItem);
+        this.data.itemlist.push(this.editedItem);
       }
       this.close();
     },
   },
 };
 </script>
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
-h2 {
- font-family: "Open Sans", sans-serif;
-}
-.mytable table tr {
-  background-color: white;
-  border: 1px solid black;
-}
-h3{
-   font-family: "Open Sans", sans-serif;
-   font-size:35px;
-   color:#22223a;
-}
-.v-data-table th {
-  background-color:  #22223a;/*  #1d1e22 */
-  border: 1px solid #e0e0e0;
-  border-bottom: 1px solid black ;
-}
-.mytable table td {
-  background-color: white;
-  border: 1px solid #e0e0e0;
-}
-.v-data-footer {
-  display: none !important;
-}
-.btn_design {
-  text-decoration: none;
-  color: #ffffff;
-}
-span {
-  font-size: 16px;
-  color: #fff;
-}
-.v-application a {
-  color: #ffffff;
-}
-.table_title {
-  margin: 0px 0 30px 0;
-}
-.v-application a {
-    color: #ffffff !important;
-}
-</style>

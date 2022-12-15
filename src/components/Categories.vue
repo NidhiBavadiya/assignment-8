@@ -2,8 +2,8 @@
   <div class="container">
     <!-- this data for table display -->
     <v-data-table
-      :headers="headers"
-      :items="Categories"
+      :headers="data.headers"
+      :items="data.Categories"
       disable-pagination="false"
       class="elevation-1 mytable"
     >
@@ -39,46 +39,54 @@
           <v-toolbar-title><h3>All Categories</h3> </v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
-          <v-dialog v-model="dialog" max-width="500px">
+          <v-dialog v-model="dialog" max-width="500px" class="rounded-pill">
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="#22223a" dark class="mb-2" v-bind="attrs" v-on="on">
-                <router-link to="/adddata" class="btn_design"> AddItem </router-link>
+                <router-link to="/adddata" class="btn_design"> Add-Category</router-link>
               </v-btn>
+              <!-- <v-btn color="#22223a" dark class="mb-2" v-bind="attrs" v-on="on">
+                Add-Category
+              </v-btn> -->
             </template>
 
             <v-card>
-              <v-card-title>
+              <v-card-title class="formtitle">
                 <span class="text-h5">{{ formTitle }}</span>
               </v-card-title>
               <!-- display table data name id status etc....  -->
-              <v-card-text>
+              <v-card-text class="formdisplay">
                 <!-- form for edit.....  -->
                 <v-container>
                   <v-row class="justify-content-around">
                     <!-- id -->
-                    <v-col cols="12" sm="6" md="6">
+                    <v-col cols="12" sm="6" md="6" class="idvalue">
                       id
-                      <v-text-field v-model="editedItem.id" label="id"></v-text-field>
+                      <v-text-field
+                        v-model="editedItem.id"
+                        :rules="idRules"
+                        filled
+                        shaped
+                      ></v-text-field>
                     </v-col>
                     <!-- name -->
                     <v-col cols="12" sm="6" md="6">
                       name
-                      <v-text-field v-model="editedItem.name" label="name"></v-text-field>
+                      <v-text-field v-model="editedItem.name"></v-text-field>
                     </v-col>
                     <!-- description -->
-                    <v-col cols="12" sm="6" md="6">
+                    <v-col cols="12" sm="6" md="12">
+                      <label for="">description</label>
                       <v-textarea
                         solo
                         v-model="editedItem.description"
-                        name="description"
                         :rules="descriptionRules"
                         :counter="100"
                         label="description"
                       ></v-textarea>
                     </v-col>
-                 
+                  </v-row>
                   <!-- toggle switch -->
-                
+                  <v-row>
                     <v-col cols="12" sm="6" md="6">
                       <v-switch v-model="editedItem.status"> </v-switch>
                     </v-col>
@@ -87,10 +95,12 @@
               </v-card-text>
 
               <!-- edit form save aur cancle button for edit data  -->
-              <v-card-actions>
+              <v-card-actions class="justify-content-center">
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="close"> Cancel </v-btn>
-                <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
+                <v-btn class="btn" color="blue darken-1" text @click="close">
+                  Cancel
+                </v-btn>
+                <v-btn class="btn" color="blue darken-1" text @click="save"> Save </v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -120,20 +130,23 @@
         <!-- delete button -->
         <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
       </template>
-      <template v-slot:no-data>
+            <template v-slot:no-data>
         <v-btn color="primary" @click="initialize"> Reset </v-btn>
       </template>
+
     </v-data-table>
   </div>
 </template>
 
 <script>
+import data from "../assets/data.json";
 export default {
-  props: ["Categories", "headers"],
   data: () => ({
     dialog: false,
     dialogDelete: false,
     editedIndex: -1,
+    //json array object
+    data: data,
 
     //blank array for add edit value...
     editedItem: {
@@ -150,6 +163,15 @@ export default {
       status: "",
       Actions: "",
     },
+
+    idRules: [
+      (v) => !!v || "id is required",
+      (v) => Number.isInteger(Number(v)) || "The value must be an integer number",
+    ],
+    descriptionRules: [
+      (v) => !!v || "Description is required",
+      (v) => v.length <= 100 || "Description must be less than 100 characters",
+    ],
   }),
 
   // for the form which form open add item aur edit item
@@ -173,33 +195,34 @@ export default {
     console.log(CateValue);
   },
 
-  //filter for change status value change
-  filters: {
-    changevalue: (value) => {
-      console.log(value);
-      return value == true ? "Active" : "Deactive";
-    },
-  },
-
   methods: {
+
+
     // this for open edit form
     editItem(item) {
-      this.editedIndex = this.Categories.indexOf(item);
+      this.editedIndex = this.data.Categories.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
       const EditValue = localStorage.getItem("EditData");
       console.log(EditValue);
+      this.$router.push("/adddata")
+      console.log(EditValue);
     },
+
+
     //for delete item sure popup message display and ic ok them cancle value
     deleteItem(item) {
-      this.editedIndex = this.Categories.indexOf(item);
+      this.editedIndex = this.data.Categories.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialogDelete = true;
     },
+
+
     deleteItemConfirm() {
-      this.Categories.splice(this.editedIndex, 1);
+      this.data.Categories.splice(this.editedIndex, 1);
       this.closeDelete();
     },
+
 
     //this method for cancle edit data
     close() {
@@ -209,6 +232,8 @@ export default {
         this.editedIndex = -1;
       });
     },
+
+
     //after delete popup was close for that
     closeDelete() {
       this.dialogDelete = false;
@@ -218,61 +243,22 @@ export default {
       });
     },
 
+
     //this method for save edit data
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.Categories[this.editedIndex], this.editedItem);
-        localStorage.setItem("CategorieData", JSON.stringify(this.Categories));
+        Object.assign(
+          this.data.Categories[this.editedIndex],
+          this.editedItem
+        );
+        this.$router.push("/adddata")
+        localStorage.setItem("CategorieData", JSON.stringify(this.data.Categories));
       } else {
-        this.Categories.push(this.editedItem);
+        this.data.Categories.push(this.editedItem);
       }
       this.close();
     },
   },
 };
 </script>
-<style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
-h3 {
-  font-family: "Open Sans", sans-serif;
-}
-.mytable table tr {
-  background-color: white;
-  border: 1px solid black;
-}
-h3 {
-  font-family: "Open Sans", sans-serif;
-  font-size: 35px;
-  color: #22223a;
-}
-.v-data-table th {
-  background-color: #22223a; /*  #1d1e22 */
-  border: 1px solid #e0e0e0;
-  border-bottom: 1px solid black;
-}
-.mytable table td {
-  background-color: white;
-  border: 1px solid #e0e0e0;
-}
-.v-data-footer {
-  display: none !important;
-}
-.btn_design {
-  text-decoration: none;
-  color: #ffffff;
-}
-span {
-  font-size: 16px;
-  color: #fff;
-}
-.v-toolbar__content,
-.v-toolbar__extension {
-  padding: 4px !important;
-}
-.table_title {
-  margin: 0px 0 30px 0;
-}
-.v-application a {
-  color: #ffffff !important;
-}
-</style>
+<style></style>
