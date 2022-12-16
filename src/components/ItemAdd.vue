@@ -1,80 +1,84 @@
 <template>
-  <div class="itemform">
-    <v-form v-model="valid">
-      <v-container>
-        <v-row>
-          <v-cols cols="12" md="4" sm="4" class="form_col">
-            <div class="form">
-              <h2>Add new Item</h2>
+  <div class="container">
+    <v-row class="justify-content-center">
+      <v-col cols="12" sm="6" md="6" class="form1">
+        <v-card>
+          <v-card-title class="formtitle">
+            <h3 class="text-h5">Add-Items</h3>
+          </v-card-title>
+          <!-- display table data name id status etc....  -->
+          <v-card-text class="formdisplay">
+            <!-- form for edit.....  -->
+            <v-container>
+              <v-row class="justify-content-around">
 
-              <!-- id -->
-
-              <v-text-field
-                v-model="ID"
-                :rules="idRules"
-                :counter="3"
-                label="ID"
-                required
-              ></v-text-field>
-
-              <!-- name -->
-
-              <v-text-field
-                v-model="name"
-                :counter="20"
-                label="name"
-                required
-              ></v-text-field>
-
-              <!-- categories -->
-
-              <v-select :items="items" label="category" v-model="category"></v-select>
-
-              <!-- description -->
-
-              <v-textarea
-                solo
-                v-model="description"
-                name="description"
-                :rules="descriptionRules"
-                :counter="100"
-                label="description"
-              ></v-textarea>
-
-              <!-- price -->
-
-              <v-text-field
-                v-model="price"
-                prefix="$"
-                :rules="priceRules"
-                label="price"
-              ></v-text-field>
-
-              <!-- status -->
-              <v-row class="form_row">
-                <v-col cols="12" md="4" sm="4">
-                  <v-switch v-model="status" color="#22223a"></v-switch>
-                </v-col> </v-row
-              ><v-row>
-                <!-- button -->
-                <v-col cols="12" md="4" sm="4">
-                  <v-btn
-                    color="#22223a"
-                    dark
-                    class="mb-2"
-                    v-bind="attrs"
-                    v-on="on"
-                    v-on:click="AddItems()"
-                  >
-                    AddItem
-                  </v-btn>
+                <!-- id -->
+                <v-col cols="12" sm="6" md="6"
+                  >ID
+                  <v-text-field v-model="ID" outlined dense required></v-text-field>
                 </v-col>
+
+                <!-- name -->
+                <v-col cols="12" sm="6" md="6"
+                  >Name
+                  <v-text-field v-model="name" outlined dense required></v-text-field>
+                </v-col>
+
+                <!-- category -->
+                <v-col cols="12" sm="6" md="6"
+                  >Category
+                  <v-select :items="items" outlined dense v-model="category"></v-select>
+                </v-col>
+
+                <!-- price -->
+                <v-col cols="12" sm="6" md="6"
+                  >Price
+                  <v-text-field
+                    v-model="price"
+                    prefix="$"
+                    required
+                    outlined
+                    dense
+                  ></v-text-field>
+                </v-col>
+
+                <!-- description -->
+                    <v-row class="form_row p-0">
+                      <v-col cols="12" sm="6" md="6"
+                        >Description
+                        <v-textarea
+                          solo
+                          v-model="description"
+                          name="description"
+                          :rules="descriptionRules"
+                          :counter="100"
+                          required
+                          outlined
+                          dense
+                        ></v-textarea
+                      ></v-col>
+                      
+                      <!-- status -->
+                      <v-col cols="12" sm="6" md="6">
+                        <v-switch v-model="status" required>
+                          <span>{{ value }}</span>
+                        </v-switch>
+                      </v-col>
+                    </v-row>
+                <!--  -->
               </v-row>
-            </div>
-          </v-cols>
-        </v-row>
-      </v-container>
-    </v-form>
+            </v-container>
+          </v-card-text>
+
+          <!-- edit form save aur cancle button for edit data  -->
+          <v-card-actions class="justify-content-center">
+            <v-btn  class="custom-button" text @click="AddItems">
+              Add-Item
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -91,7 +95,6 @@ export default {
     ],
     name: "",
     category: "",
-
     description: "",
     descriptionRules: [
       (v) => !!v || "Description is required",
@@ -106,11 +109,11 @@ export default {
 
     //json array object
     data: data,
+    items:null,
   }),
   mounted() {
     const CateValue = localStorage.getItem("Items");
     console.log(CateValue);
-
     this.Categorycheck();
   },
 
@@ -120,15 +123,15 @@ export default {
       console.log(this.data.Categories);
       this.data.Categories.forEach((element) => {
         if (element.status === true || element.status === "Active") {
-           console.log(element.status);
-        console.log(element.name);
+          console.log(element.status);
+          console.log(element.name);
           this.items.push(element.name);
         }
       });
     },
 
     //method for new value push in array
-    AddItems: function () {
+    AddItems() {
       const newitem = {
         id: this.ID,
         name: this.name,

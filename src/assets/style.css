@@ -6,101 +6,123 @@
 
 }
 
- .mainpage {
-    padding: 0;
+.v-main {
+    background-color: #E0E0E0;
+    height: 100vh;
+    overflow: hidden;
+    padding: 50px 0 0 100px !important;
+}
+
+.v-navigation-drawer__content {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: rgb(0 0 0 / 80%);
+}
+
+.v-application .blue--text.text--darken-1 {
+    color: #fbfdff !important;
+    caret-color: #1e88e5 !important;
+    background: black;
+}
+
+
+
+.theme--light.v-data-table {
+    background-color: #fff;
+    color: rgba(0, 0, 0, .87);
+    padding: 20px;
+    box-shadow: 0px 5px 20px #22223a;
+}
+
+
+
+.v-main__wrap {
+    flex: 1 1 auto;
+    max-width: 100%;
+    position: relative;
+    padding: 0 !important;
+}
+
+p {
+    font-size: 16px;
+    color: #fff;
+
+}
+
+.collaps_menu {
+    background-color: rgb(0 0 0 / 80%);
+}
+
+.v-expansion-panel-content__wrap {
+    padding: 0 24px 16px;
+    flex: 1 1 auto;
+    max-width: 100%;
+    background-color: rgb(0 0 0 / 80%);
+}
+
+.v-expansion-panel-header {
+    text-align: left;
+    background-color: rgb(0 0 0 / 80%);
+    color: #ffffff;
+}
+
+h5 {
+    color: #ffffff;
+}
+
+.v-toolbar__content,
+.v-toolbar__extension {
+    align-items: center;
+    display: flex;
+    position: relative;
+    z-index: 0;
+    padding: 30px;
+    background-color: rgb(0 0 0 / 80%);
+}
+
+.v-toolbar__content,
+.v-toolbar__extension {
+    padding: 10px !important;
+}
+
+h4 {
+    color: #fff;
+}
+
+h3 {
     font-family: "Open Sans", sans-serif;
+    font-size: 35px;
+    color: #fff;
+    margin: 0;
 }
-.v-data-footer {
-    display: none !important;
+
+.formtitle {
+    background-color: rgb(0 0 0 / 80%);
 }
+
+.v-application {
+    color: #ffffff !important;
+}
+
+.col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 6px;
+}
+
 .v-data-table th {
-   
+    background-color: rgb(0 0 0 / 80%);
     border: 1px solid #e0e0e0;
     border-bottom: 1px solid black;
+    vertical-align: middle;
+    padding: 0px 10px !important;
 }
 
 .mytable table td {
     background-color: white;
     border: 1px solid #e0e0e0;
-}
-a{
-    font-family: "Open Sans", sans-serif;
-    text-decoration: none !important;
-    color: #000000;
-}
-.item_list {
-    color: #000000;
-}
-.table_main {
-    padding: 100px;
-}
-.v-main__wrap {
-    flex: 1 1 auto;
-    max-width: 100%;
-    position: relative;
-    padding: 20px;
-}
-.v-menu__content {
-    min-width: 256px;
-    top: 72px;
-    transform-origin: left top;
-    z-index: 8;
-}
-
-
-
-p {
-    font-size: 16px;
-    color: rgb(0, 0, 0);
-}
-
-.v-toolbar__content {
-    align-items: center;
-    display: flex;
-    position: relative;
-    z-index: 0;
-}
-
-.v-toolbar__content,
-.v-toolbar__extension {
-    padding: 4px !important;
-}
-
-h4 {
-    color: rgb(0, 0, 0);
-}
-
-.v-list {
-    background: #e1e1e7 !important;
-    color: rgba(0, 0, 0, 0.87);
-}
-
-.v-main__wrap {
-    flex: 1 1 auto;
-    max-width: 100%;
-    position: relative;
-    padding: 20px;
-}
-
-#itemlist {
-    height: 100vh;
-}
-
-.table_main {
-    height: 100%;
-}
-
-#add {
-    height: 100vh;
-}
-
-#additem {
-    height: 100vh;
-}
-
-/* --------------------------component style-------------------------------- */
-h2 {
-    font-family: "Open Sans", sans-serif;
+    padding: 0px 10px !important;
 }
 
 .mytable table tr {
@@ -108,51 +130,20 @@ h2 {
     border: 1px solid black;
 }
 
-h3 {
+
+.custom-button {
+    background-color: rgb(0 0 0 / 80%);
+    color: white !important;
+}
+
+a {
     font-family: "Open Sans", sans-serif;
-    font-size: 35px;
-    color: #22223a;
-}
-
-
-
-
-
-.btn_design {
-    text-decoration: none;
-    color: #ffffff;
-}
-
-span {
-    font-size: 16px;
-    color: rgb(0, 0, 0);
-}
-
-.v-application a {
+    text-decoration: none !important;
     color: #000000;
 }
 
-.table_title {
-    margin: 0px 0 30px 0;
-}
-
-.v-application a {
-    color: #000000 !important;
-}
-
-.v-toolbar__content,
-.v-toolbar__extension {
-    padding: 4px !important;
-} 
-
-/* -----------------form component---------------------------------- */
- .form {
-    padding: 20px 50px;
-    margin: 10px auto;
-    width: 50%;
-    text-align: center;
-    box-shadow: 0px 5px 20px #22223a;
-    border-radius: 30px;
+.v-data-footer {
+    display: none !important;
 }
 
 h2 {
@@ -162,34 +153,28 @@ h2 {
     padding: 10px;
     border-radius: 34px;
     font-size: calc(1.325rem + 0.9vw);
+    font-family: "Open Sans", sans-serif;
 }
 
-.dataform {
-    height: 100%;
+span {
+    font-size: 16px;
+    color: white;
 }
 
-title {
-    background: #000000;
+.table_title {
+    margin: 0px 0 30px 0;
 }
 
-.v-application .primary--text {
-    color: #000000 !important;
+.formtitle {
+    background: rgb(0, 0, 0 /80%);
 }
-/* .formtitle {
-    background: rgb(0, 0, 0);
-  } */
-  span {
-    color:  #000000;
-  }
-  .formdisplay {
+
+.formdisplay {
     padding: 30px 24px 20px !important;
-  }
-  .btn {
-    background: rgb(0, 0, 0);
-  }
-  .v-btn:not(.v-btn--round).v-size--default {
-    height: 36px;
-    min-width: 64px;
-    padding: 0 16px;
-    /* border: 1px solid black; */
-  }  
+}
+
+@media (max-width:1263px) {
+    .v-main {
+        padding: 50px 0 0 0px !important;
+    }
+}

@@ -44,20 +44,20 @@
       ],
 
       "headers": [
-        { "text": "id", "value": "id" },
-        { "text": "name", "value": "name" },
-        { "text": "description", "value": "description" },
-        { "text": "status", "value": "status" },
+        { "text": "ID", "value": "ID" },
+        { "text": "Name", "value": "name" },
+        { "text": "Description", "value": "description" },
+        { "text": "Status", "value": "status" },
         { "text": "Actions", "value": "actions", "sortable": false }
       ],
   
       "Itemheaders": [
-        { "text": "id", "value": "id" },
-        { "text": "name", "value": "name" },
-        { "text": "category", "value": "category" },
-        { "text": "description", "value": "description" },
-        { "text": "price", "value": "price" },
-        { "text": "status", "value": "status" },
+        { "text": "ID", "value": "ID" },
+        { "text": "Name", "value": "name" },
+        { "text": "Category", "value": "category" },
+        { "text": "Description", "value": "description" },
+        { "text": "Price", "value": "price" },
+        { "text": "Status", "value": "status" },
         { "text": "Actions", "value": "actions", "sortable": false }
       ]
      

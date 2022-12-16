@@ -6,6 +6,7 @@
       :items="data.itemlist"
       class="elevation-1 mytable"
     >
+      <!-- table value tr td th -->
       <template v-slot:body="{ items }">
         <tbody>
           <tr v-for="item in items" :key="item.name">
@@ -43,14 +44,7 @@
           <v-dialog v-model="dialog" max-width="500px">
             <!-- add item button -->
             <template v-slot:activator="{ on, attrs }">
-              <router-link to="/itemadd" class="btn_design"
-                ><v-btn color="#22223a" dark class="mb-2" v-bind="attrs" v-on="on">
-                  New Item
-                </v-btn></router-link
-              >
-              <!-- <v-btn color="#22223a" dark class="mb-2" v-bind="attrs" v-on="on">
-                New Item
-              </v-btn> -->
+              <v-btn light class="mb-2" v-bind="attrs" v-on="on"> New Item </v-btn>
             </template>
             <!-- form for edit data... -->
             <v-card>
@@ -62,64 +56,80 @@
                 <v-container>
                   <v-row class="justify-content-around">
                     <!-- id -->
-                    <v-col cols="12" sm="6" md="6">
+                    <v-col cols="12" sm="6" md="6"
+                      >ID
                       <v-text-field
                         v-model="editedItem.id"
-                        label="id"
                         required
+                        outlined
+                        dense
                       ></v-text-field>
                     </v-col>
                     <!-- name -->
-                    <v-col cols="12" sm="6" md="6">
+                    <v-col cols="12" sm="6" md="6"
+                      >Name
                       <v-text-field
                         v-model="editedItem.name"
-                        label="item name"
                         required
+                        outlined
+                        dense
                       ></v-text-field>
                     </v-col>
                     <!-- category -->
-                    <v-col cols="12" sm="6" md="6">
+                    <v-col cols="12" sm="6" md="6"
+                      >Category
                       <v-select
                         :items="items"
-                        label="category"
                         v-model="editedItem.category"
+                        outlined
+                        dense
                       ></v-select>
                     </v-col>
-                    <!-- description -->
-                    <v-col cols="12" sm="6" md="6">
-                      <v-textarea
-                        solo
-                        v-model="editedItem.description"
-                        name="description"
-                        :rules="descriptionRules"
-                        :counter="100"
-                        label="description"
-                        required
-                      ></v-textarea
-                    ></v-col>
                     <!-- price -->
-                    <v-col cols="12" sm="6" md="6">
+                    <v-col cols="12" sm="6" md="6"
+                      >Price
                       <v-text-field
                         v-model="editedItem.price"
                         prefix="$"
-                        label="price"
                         required
+                        outlined
+                        dense
                       ></v-text-field>
                     </v-col>
-                    <!-- status -->
-                    <v-col cols="12" sm="6" md="6">
-                      <v-switch v-model="editedItem.status" required>
-                        <span>{{ value }}</span>
-                      </v-switch>
-                    </v-col>
+
+                    <!-- description -->
+                    <v-row class="form_row p-0">
+                      <v-col cols="12" sm="6" md="6"
+                        >Description
+                        <v-textarea
+                          solo
+                          v-model="editedItem.description"
+                          name="description"
+                          :rules="descriptionRules"
+                          :counter="100"
+                          required
+                          outlined
+                          dense
+                        ></v-textarea
+                      ></v-col>
+
+                      <!-- status -->
+                      <v-col cols="12" sm="6" md="6">
+                        <v-switch v-model="editedItem.status" required>
+                          <span>{{ value }}</span>
+                        </v-switch>
+                      </v-col>
+                    </v-row>
+                    <!--  -->
                   </v-row>
                 </v-container>
               </v-card-text>
               <!-- save & Cancel button -->
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="close"> Cancel </v-btn>
-                <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
+                <v-btn class="custom-button" text @click="close"> Cancel </v-btn>
+                <v-btn class="custom-button" text @click="save"> Save </v-btn>
+                <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -130,8 +140,8 @@
               >
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-                <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+                <v-btn class="custom-button" text @click="closeDelete">Cancel</v-btn>
+                <v-btn class="custom-button" text @click="deleteItemConfirm">OK</v-btn>
                 <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
@@ -141,9 +151,6 @@
       <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
         <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
-      </template>
-      <template v-slot:no-data>
-        <v-btn color="primary" @click="initialize"> Reset </v-btn>
       </template>
     </v-data-table>
   </div>
@@ -176,6 +183,7 @@ export default {
       status: "",
       Actions: "",
     },
+    items:null,
   }),
 
   computed: {
@@ -255,7 +263,10 @@ export default {
         Object.assign(this.data.itemlist[this.editedIndex], this.editedItem);
         localStorage.setItem("Items", JSON.stringify(this.data.itemlist));
       } else {
+        console.log("else");
         this.data.itemlist.push(this.editedItem);
+        localStorage.setItem("Items", JSON.stringify(this.data.itemlist));
+        console.log("this.data.Items", this.data.itemlist);
       }
       this.close();
     },

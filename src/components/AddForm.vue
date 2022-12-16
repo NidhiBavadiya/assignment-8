@@ -1,73 +1,63 @@
 <template>
-  <div class="itemform">
-    <v-form v-model="valid">
-      <v-container>
-        <v-row>
-          <v-cols lg="4"></v-cols>
-          <v-cols cols="12" md="6" sm="6" lg="4" class="form_col">
-            <div class="form">
-              <!-- title of form -->
-              <div class="title">
-                <span class="text-h5">{{ formTitle }}</span>
-              </div>
+  <div class="container">
+    <v-row class="justify-content-center">
+      <v-col cols="12" sm="6" md="6" class="form1">
+        <v-card>
+          <v-card-title class="formtitle">
+            <h3>Add-Category</h3>
+          </v-card-title>
 
-              <!-- form input  -->
-              <!-- id -->
+          <!-- display table data name id status etc....  -->
+          <v-card-text class="formdisplay">
+            <!-- form for edit.....  -->
+            <v-container>
+              <v-row class="justify-content-around">
+                <!-- id -->
+                <v-col cols="12" sm="6" md="6" class="idvalue">
+                  id
+                  <v-text-field
+                    v-model="ID"
+                    :rules="idRules"
+                    outlined
+                    dense
+                  ></v-text-field>
+                </v-col>
 
-              <v-text-field
-                class="text-light"
-                v-model="ID"
-                :rules="idRules"
-                :counter="3"
-                label="ID"
-                required
-              ></v-text-field>
+                <!-- name -->
+                <v-col cols="12" sm="6" md="6">
+                  Name
+                  <v-text-field v-model="name" outlined dense></v-text-field>
+                </v-col>
 
-              <!-- name -->
-
-              <v-text-field
-                v-model="name"
-                :counter="10"
-                label="name"
-                required
-                class="custom-placeholer-color"
-              ></v-text-field>
-
-              <!-- discription -->
-
-              <v-textarea
-                solo
-                v-model="description"
-                name="description"
-                :rules="descriptionRules"
-                :counter="100"
-                label="description"
-              ></v-textarea>
-
-              <!-- status -->
-              <v-row class="form_row">
-                <v-switch v-model="status" color="#22223a"></v-switch>
-              </v-row>
-              <!-- add button -->
-              <v-row class="form_row">
-                <v-col md="6" class="btnadd">
-                  <v-btn
-                    class="btn"
-                    v-bind="attrs"
-                    v-on="on"
-                    v-on:click="AddItems()"
-                    color="#22223a"
-                    ><span> AddItem</span>
-                  </v-btn>
+                <!-- description -->
+                <v-col cols="12" sm="6" md="12">
+                  <label for="">Description</label>
+                  <v-textarea
+                    outlined
+                    dense
+                    v-model="description"
+                    :rules="descriptionRules"
+                    :counter="100"
+                  ></v-textarea>
                 </v-col>
               </v-row>
-              <!--  -->
-            </div>
-          </v-cols>
-          <v-cols lg="4"></v-cols>
-        </v-row>
-      </v-container>
-    </v-form>
+
+              <!-- toggle switch -->
+              <v-row>
+                <v-col cols="12" sm="6" md="6">
+                  <v-switch v-model="status"> </v-switch>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+
+          <!-- edit form save aur cancle button for edit data  -->
+          <v-card-actions class="justify-content-center">
+            <v-btn class="custom-button" text @click="addcategory"> Add-Category </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -75,7 +65,6 @@
 import data from "../assets/data.json";
 export default {
   data: () => ({
-    valid: true,
     ID: "",
     idRules: [
       (v) => !!v || "id is required",
@@ -94,13 +83,15 @@ export default {
   }),
 
   mounted() {
-    const CateValue = localStorage.getItem("CategorieData");
-    console.log(CateValue);
+    // const CateValue = localStorage.getItem("CategorieData");
+
+    const EditData = localStorage.getItem("EditData");
+    console.log(EditData);
     console.log(this.data.Categories);
   },
-  // method for new value add
+
   methods: {
-    AddItems: function () {
+    addcategory() {
       const newvalue = {
         id: this.ID,
         name: this.name,
@@ -116,4 +107,3 @@ export default {
   },
 };
 </script>
-<style></style>

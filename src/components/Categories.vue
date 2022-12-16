@@ -41,12 +41,7 @@
           <v-spacer></v-spacer>
           <v-dialog v-model="dialog" max-width="500px" class="rounded-pill">
             <template v-slot:activator="{ on, attrs }">
-              <v-btn color="#22223a" dark class="mb-2" v-bind="attrs" v-on="on">
-                <router-link to="/adddata" class="btn_design"> Add-Category</router-link>
-              </v-btn>
-              <!-- <v-btn color="#22223a" dark class="mb-2" v-bind="attrs" v-on="on">
-                Add-Category
-              </v-btn> -->
+              <v-btn light class="mb-2" v-bind="attrs" v-on="on"> Add-Category </v-btn>
             </template>
 
             <v-card>
@@ -58,26 +53,34 @@
                 <!-- form for edit.....  -->
                 <v-container>
                   <v-row class="justify-content-around">
+
                     <!-- id -->
                     <v-col cols="12" sm="6" md="6" class="idvalue">
-                      id
+                      ID
                       <v-text-field
                         v-model="editedItem.id"
                         :rules="idRules"
-                        filled
-                        shaped
+                        outlined
+                        dense
                       ></v-text-field>
                     </v-col>
+
                     <!-- name -->
                     <v-col cols="12" sm="6" md="6">
-                      name
-                      <v-text-field v-model="editedItem.name"></v-text-field>
+                      Name
+                      <v-text-field
+                        v-model="editedItem.name"
+                        outlined
+                        dense
+                      ></v-text-field>
                     </v-col>
+
                     <!-- description -->
                     <v-col cols="12" sm="6" md="12">
-                      <label for="">description</label>
+                      <label for="">Description</label>
                       <v-textarea
-                        solo
+                        outlined
+                        dense
                         v-model="editedItem.description"
                         :rules="descriptionRules"
                         :counter="100"
@@ -85,6 +88,7 @@
                       ></v-textarea>
                     </v-col>
                   </v-row>
+
                   <!-- toggle switch -->
                   <v-row>
                     <v-col cols="12" sm="6" md="6">
@@ -97,10 +101,11 @@
               <!-- edit form save aur cancle button for edit data  -->
               <v-card-actions class="justify-content-center">
                 <v-spacer></v-spacer>
-                <v-btn class="btn" color="blue darken-1" text @click="close">
+                <v-btn class="custom-button"  text @click="close">
                   Cancel
                 </v-btn>
-                <v-btn class="btn" color="blue darken-1" text @click="save"> Save </v-btn>
+                <v-btn class="custom-button" text @click="save"> Save </v-btn>
+                <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -113,8 +118,8 @@
               >
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-                <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+                <v-btn class="custom-button" text @click="closeDelete">Cancel</v-btn>
+                <v-btn class="custom-button" text @click="deleteItemConfirm">OK</v-btn>
                 <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
@@ -123,6 +128,7 @@
           <!--  -->
         </v-toolbar>
       </template>
+      
       <!--action button code -->
       <template v-slot:item.actions="{ item }">
         <!-- edit button -->
@@ -130,10 +136,6 @@
         <!-- delete button -->
         <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
       </template>
-            <template v-slot:no-data>
-        <v-btn color="primary" @click="initialize"> Reset </v-btn>
-      </template>
-
     </v-data-table>
   </div>
 </template>
@@ -196,19 +198,18 @@ export default {
   },
 
   methods: {
-
-
     // this for open edit form
     editItem(item) {
+      console.log("item", item);
       this.editedIndex = this.data.Categories.indexOf(item);
+      console.log(this.editedIndex);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
       const EditValue = localStorage.getItem("EditData");
-      console.log(EditValue);
-      this.$router.push("/adddata")
+      // console.log("item",data.Categories);
+      // this.$router.push("/adddata")
       console.log(EditValue);
     },
-
 
     //for delete item sure popup message display and ic ok them cancle value
     deleteItem(item) {
@@ -217,12 +218,10 @@ export default {
       this.dialogDelete = true;
     },
 
-
     deleteItemConfirm() {
       this.data.Categories.splice(this.editedIndex, 1);
       this.closeDelete();
     },
-
 
     //this method for cancle edit data
     close() {
@@ -233,7 +232,6 @@ export default {
       });
     },
 
-
     //after delete popup was close for that
     closeDelete() {
       this.dialogDelete = false;
@@ -243,18 +241,19 @@ export default {
       });
     },
 
-
     //this method for save edit data
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(
-          this.data.Categories[this.editedIndex],
-          this.editedItem
-        );
-        this.$router.push("/adddata")
+        console.log("if");
+        Object.assign(this.data.Categories[this.editedIndex], this.editedItem);
+        console.log(" this.data.Categories[", this.data.Categories);
+        // this.$router.push("/adddata")
         localStorage.setItem("CategorieData", JSON.stringify(this.data.Categories));
       } else {
+        console.log("else");
         this.data.Categories.push(this.editedItem);
+        localStorage.setItem("CategorieData", JSON.stringify(this.data.Categories));
+        console.log("this.data.Categorie", this.data.Categories);
       }
       this.close();
     },
